@@ -3,7 +3,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.*;
 import org.json.*;
 
+/* Compile with: javac -cp ./*: *.java */
+/* Run with: java -cp ./*: DBRouteCache */
+
 public class DBRouteCache {
+
+	/* FOR TESTING PURPOSES */
+	// public static void main(String[] args) {
+	// 	manageRoutes();
+	// }
 
     private void manageRoutes () {
     	try {
