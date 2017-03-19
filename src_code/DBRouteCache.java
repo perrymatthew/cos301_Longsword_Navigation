@@ -23,4 +23,24 @@ public class DBRouteCache {
 	    	e.printStackTrace();
     	}
     }
+
+    private static org.json.JSONArray sortArrayByPopularity (org.json.JSONArray arr) {
+    	org.json.JSONObject max = arr.getJSONObject(0);
+    	for (int i = 0; i<arr.length()-1; i++) {
+    		max = arr.getJSONObject(i);
+    		int lowestIndex = i;
+	    	for(int e = i+1; e<arr.length(); e++) {
+	    		if( arr.getJSONObject(e).getInt("popularity") > max.getInt("popularity") ) {
+	    			lowestIndex = e;
+	    			max = arr.getJSONObject(e);
+	    		}
+	    	}
+	    	if(lowestIndex != i){
+	    		org.json.JSONObject temp = new org.json.JSONObject(arr.getJSONObject(i).toString());
+	    		arr.put(i,max);
+	    		arr.put(lowestIndex, temp);
+	    	}
+	    }
+	    return arr;
+	}
 }
