@@ -229,7 +229,7 @@ core
 nbproject/*
 nbproject/project.properties
 nbproject/project.xml
-nbproject/build.xml
+build.xml
 
 #java specific
 *.class
