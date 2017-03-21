@@ -11,7 +11,7 @@ public class Routing implements Navigation
 
     public Routing(){}
 
-    public Routing calculateRoute(String start, String end){
+    public Routing getRoute(String start, String end){
         start_Point = start;
         end_Point = end;
 
