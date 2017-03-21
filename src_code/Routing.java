@@ -21,7 +21,7 @@ public class Routing implements Navigation
     }
 
     public String display_Route(){
-        String dis = start_Point + end_Point + Double.toString(distance);
+        String dis = "Start Point: " + start_Point + " End Point: " + end_Point + " Distance Traveled: " + Double.toString(distance);
         return dis;
     }
 }
