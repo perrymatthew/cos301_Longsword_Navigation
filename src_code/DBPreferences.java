@@ -1,6 +1,7 @@
 public class DBPreferences
 {
     //JSON object file still to be added
+    JSONParser parser = new JSONParser();
     public DBPreferences()
     {
         //JSON parser to still be added
