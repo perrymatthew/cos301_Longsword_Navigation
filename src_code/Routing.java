@@ -1,27 +1,18 @@
-import java.util.Random;
+import java.util.ArrayList;
 
-public class Routing
-{
+public class Routing {
+
     private DBRouteCache routeCache = new DBRouteCache();
-
-    private String start_Point = "";
-    private String end_Point = "";
-    private Double distance = 0.0;
-    private Routing route = new Routing();
 
     public Routing(){}
 
-    public Routing getRoute(String start, String end){
-        start_Point = start;
-        end_Point = end;
-
-        distance = Math.random();
-
-        return route;
+    public ArrayList<Waypoint> calculateRoute(Waypoint start, Waypoint end, ArrayList<Waypoint> nodes, DBPreferences userPref){
+        return nodes;
     }
 
-    public String display_Route(){
-        String dis = "Start Point: " + start_Point + " End Point: " + end_Point + " Distance Traveled: " + Double.toString(distance);
-        return dis;
+    public RouteObj getCache() {
+        RouteObj cachedRoute = new RouteObj();
+
+        return cachedRoute;
     }
 }
