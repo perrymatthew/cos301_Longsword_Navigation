@@ -1,4 +1,4 @@
-public class DBPreferences implements Navigation
+public class DBPreferences
 {
     //JSON object file still to be added
     public DBPreferences()

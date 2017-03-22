@@ -1,4 +1,4 @@
-public interface Navigation
+public class Navigation
 {
     
 }

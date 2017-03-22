@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Routing implements Navigation
+public class Routing
 {
     private DBRouteCache routeCache = new DBRouteCache();
 
