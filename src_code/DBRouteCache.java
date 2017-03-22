@@ -62,4 +62,9 @@ public class DBRouteCache {
 	    }
 	    return arr;
 	}*/
+	
+	private boolean isRoute(Waypoint startPoint,Waypoint endPoint)
+	{
+	  return true;
+	}
 }
