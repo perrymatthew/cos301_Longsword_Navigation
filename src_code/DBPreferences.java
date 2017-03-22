@@ -20,4 +20,9 @@ public class DBPreferences implements Navigation
     {
         System.out.println("user deleted");
     }
+    
+    public void updatePrefs(String userID, boolean[] prefs)
+    {
+        System.out.println("prefs updated");
+    }
 }
