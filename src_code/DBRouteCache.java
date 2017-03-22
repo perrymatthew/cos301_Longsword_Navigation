@@ -13,8 +13,9 @@ public class DBRouteCache {
 	// public static void main(String[] args) {
 	// 	manageRoutes();
 	// }
+	public DBRouteCache(){}
 	
-	public boolean addRoute(Waypoint[] route) {
+	public boolean addRoute(ArrayList<Waypoint> nodes) {
 		return true;
 	}
 	
