@@ -18,7 +18,7 @@ public class DBRouteCache {
 		return true;
 	}
 	
-	private boolean deleteRoute(Waypoint startPoint, Waypoint endPoint) {
+	public boolean deleteRoute(Waypoint startPoint, Waypoint endPoint) {
 		return true;
 	}
 		
