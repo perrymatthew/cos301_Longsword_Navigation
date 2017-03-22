@@ -14,13 +14,12 @@ public class DBRouteCache {
 	// 	manageRoutes();
 	// }
 	
-	public void addRoute(ArrayList<Waypoint> route) {//????boolean return to indicate successful add of route????
-
-		//
+	public boolean addRoute(Waypoint[] route) {
+		return true;
 	}
 	
-	private void deleteRoute(Waypoint startPoint, Waypoint endPoint) {//????boolean return to indicate successful add of route????
-		//
+	private boolean deleteRoute(Waypoint startPoint, Waypoint endPoint) {
+		return true;
 	}
 		
 	
