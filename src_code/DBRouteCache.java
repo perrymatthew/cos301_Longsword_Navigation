@@ -1,7 +1,8 @@
 import java.io.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.*;
-import org.json.*;
+import java.util.ArrayList;
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.*;
+//import org.json.*;
 
 /* Compile with: javac -cp ./*: *.java */
 /* Run with: java -cp ./*: DBRouteCache */
@@ -12,9 +13,18 @@ public class DBRouteCache {
 	// public static void main(String[] args) {
 	// 	manageRoutes();
 	// }
-
+	
+	public void addRoute(ArrayList<Waypoint> route) {//????boolean return to indicate successful add of route????
+		//
+	}
+	
+	private void deleteRoute(Waypoint startPoint, Waypoint endPoint) {//????boolean return to indicate successful add of route????
+		//
+	}
+		
+	
     private void manageRoutes () {
-    	try {
+    	/*try {
 	    	JSONParser parser = new JSONParser();
 	    	org.json.simple.JSONArray simpleArr = (org.json.simple.JSONArray) parser.parse(new FileReader("DBRouteCache.json"));
 	    	org.json.JSONArray arr =  new org.json.JSONArray(simpleArr.toJSONString());
@@ -29,10 +39,10 @@ public class DBRouteCache {
 			}
     	} catch (Exception e) {
 	    	e.printStackTrace();
-    	}
+    	}*/
     }
 
-    private static org.json.JSONArray sortArrayByPopularity (org.json.JSONArray arr) {
+    /*private static org.json.JSONArray sortArrayByPopularity (org.json.JSONArray arr) {
     	org.json.JSONObject max = arr.getJSONObject(0);
     	for (int i = 0; i<arr.length()-1; i++) {
     		max = arr.getJSONObject(i);
@@ -50,5 +60,5 @@ public class DBRouteCache {
 	    	}
 	    }
 	    return arr;
-	}
+	}*/
 }
