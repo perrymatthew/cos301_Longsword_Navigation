@@ -12,7 +12,16 @@ public class DBRouteCache {
 	// public static void main(String[] args) {
 	// 	manageRoutes();
 	// }
-
+	
+	public void addRoute(Waypoint[] route) {//????boolean return to indicate successful add of route????
+		//
+	}
+	
+	private void deleteRoute(Waypoint startPoint, Waypoint endPoint) {//????boolean return to indicate successful add of route????
+		//
+	}
+		
+	
     private void manageRoutes () {
     	try {
 	    	JSONParser parser = new JSONParser();
