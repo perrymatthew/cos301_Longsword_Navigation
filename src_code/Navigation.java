@@ -35,10 +35,6 @@ public class Navigation implements IntegrationInterface{
         System.out.println("End Node: " + e.getName() + "\n");
     }
 
-    public void getFromGIS (ArrayList<Waypoint> gisList) {
-        listOfNodes = gisList;
-    }
-
     public void buildRoute () {
         if (!result.isEmpty()) {
 
