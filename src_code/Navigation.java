@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Navigation implements IntegrationInterface{
+public class Navigation implements NavigationInterface{
 
     private DBPreferences user_Pref = new DBPreferences();
     private DBRouteCache cache = new DBRouteCache();
