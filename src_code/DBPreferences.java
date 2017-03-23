@@ -1,9 +1,14 @@
-public class DBPreferences implements Navigation
+
+import jdk.nashorn.internal.parser.JSONParser;
+
+public class DBPreferences
 {
-    JSONParser parser = new JSONParser();
-    
+
+    //JSONParser parser = new JSONParser();
+    private String prefUserID;
     public DBPreferences()
     {
+      prefUserID = "zzz-bf3-25f-acdc";
        /* try{
             Object obj = parser.parse(new FileReader());           
             JSONObject jsonObject = (JSONObject) obj;
@@ -14,6 +19,26 @@ public class DBPreferences implements Navigation
         catch (Exception err)
         {
             err.printStackTrace();
-        }
-    }*/
+        }*/
+    }    
+    
+    public void addPref(String userID, boolean[] prefs)
+    {
+        System.out.println("prefs added");
+    }
+    
+    public boolean[] getPref (String userID)
+    {
+        return (new boolean[]{true, true, false});
+    }
+    
+    public void deletePrefs(String userID)
+    {
+        System.out.println("user deleted");
+    }
+    
+    public void updatePrefs(String userID, boolean[] prefs)
+    {
+        System.out.println("prefs updated");
+    }
 }
