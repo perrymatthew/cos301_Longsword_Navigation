@@ -3,14 +3,24 @@ import jdk.nashorn.internal.parser.JSONParser;
 
 public class DBPreferences
 {
-    //JSON object file still to be added
+
     //JSONParser parser = new JSONParser();
-    private String prefUserID;  
+    private String prefUserID;
     public DBPreferences()
     {
-        //JSON parser to still be added
-        prefUserID = "zzz-bf3-25f-acdc";
-    }
+      prefUserID = "zzz-bf3-25f-acdc";
+       /* try{
+            Object obj = parser.parse(new FileReader());           
+            JSONObject jsonObject = (JSONObject) obj;
+            String start_point = (String) jsonObject.get("start_point");
+            String end_point = (String) jsonObject.get("end_point");
+            Integer popularity = (Integer) jsonObject.get("popularity");
+        }
+        catch (Exception err)
+        {
+            err.printStackTrace();
+        }*/
+    }    
     
     public void addPref(String userID, boolean[] prefs)
     {
