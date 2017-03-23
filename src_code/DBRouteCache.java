@@ -91,7 +91,10 @@ public class DBRouteCache {
         private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint)
         {
             boolean success = true;
-            
+            if(startPoint.getOperational() && endPoint.getOperational())
+            {
+                
+            }
             
             return success;
         }
