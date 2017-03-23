@@ -1,10 +1,15 @@
+
+import jdk.nashorn.internal.parser.JSONParser;
+
 public class DBPreferences
 {
     //JSON object file still to be added
-    JSONParser parser = new JSONParser();
+    //JSONParser parser = new JSONParser();
+    private String prefUserID;  
     public DBPreferences()
     {
         //JSON parser to still be added
+        prefUserID = "zzz-bf3-25f-acdc";
     }
     
     public void addPref(String userID, boolean[] prefs)
