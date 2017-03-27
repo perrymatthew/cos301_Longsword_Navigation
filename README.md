@@ -1,4 +1,4 @@
-![UP Logo](UP_logo.png)
+![UP Logo](UP_Logo.PNG)
 
 # COS301 Longsword Navigation
 
