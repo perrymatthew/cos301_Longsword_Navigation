@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Navigation implements IntegrationInterface{
+public class Navigation implements NavigationInterface{
 
     private DBPreferences user_Pref = new DBPreferences();
     private DBRouteCache cache = new DBRouteCache();
@@ -33,10 +33,6 @@ public class Navigation implements IntegrationInterface{
 
         System.out.println("Start Node: " + s.getName());
         System.out.println("End Node: " + e.getName() + "\n");
-    }
-
-    public void getFromGIS (ArrayList<Waypoint> gisList) {
-        listOfNodes = gisList;
     }
 
     public void buildRoute () {

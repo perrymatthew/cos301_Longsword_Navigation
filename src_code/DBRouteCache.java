@@ -62,4 +62,40 @@ public class DBRouteCache {
 	    }
 	    return arr;
 	}*/
+	
+	private boolean isRoute(Waypoint startPoint,Waypoint endPoint)
+	{
+	  return true;
+	}
+        
+        public Waypoint[] getRoute(Waypoint startPoint, Waypoint endPoint)
+        {
+            Waypoint[] routeWaypoints = null;
+            /*%TODO
+            fetch operation for getting way points
+            */
+            if(isRoute(startPoint, endPoint))
+            {
+                if(calculateDistance(startPoint, endPoint))
+                {
+                    return routeWaypoints;
+                }
+                
+                return routeWaypoints;
+            }
+
+
+            return routeWaypoints;
+        }
+        
+        private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint)
+        {
+            boolean success = true;
+            if(startPoint.getOperational() && endPoint.getOperational())
+            {
+                
+            }
+            
+            return success;
+        }
 }
