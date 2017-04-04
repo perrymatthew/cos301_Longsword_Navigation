@@ -150,7 +150,7 @@ public class DBRouteCache {
             JSONArray wps = result.get(i).getJSONArray("waypoints");
             if (!wps.getString(0).equalsIgnoreCase(startPoint))
                 i++;
-            else if(!wps.getString(3).equalsIgnoreCase(endPoint))
+            else if(!wps.getString(wps.length()).equalsIgnoreCase(endPoint))
                 i++;
             else
                 return true;
