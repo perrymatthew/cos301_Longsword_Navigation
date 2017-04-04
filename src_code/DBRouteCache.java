@@ -189,4 +189,15 @@ public class DBRouteCache {
             e.printStackTrace();
         }
     }
+
+    private void writeToFile() {
+        System.out.println("Writing routes to local cache...");
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(FILENAME)));
+            bw.write(parsedJSON.toString());
+            bw.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
