@@ -137,7 +137,25 @@ public class DBRouteCache {
 	}
 	
 	private boolean isRoute(String startPoint,String endPoint) {
-	  return true;
+        // Create list of JSONObjects from the JSONArray parsedJSON
+        List<JSONObject> result = new ArrayList<JSONObject>(parsedJSON.length());
+
+        // Populate this list
+        for (int i = 0; i < parsedJSON.length(); i++)
+            result.add(parsedJSON.getJSONObject(i));
+
+        //Search these routes
+        for(int i = 0; i < result.size(); )
+        {
+            JSONArray wps = result.get(i).getJSONArray("waypoints");
+            if (!wps.getString(0).equalsIgnoreCase(startPoint))
+                i++;
+            else if(!wps.getString(3).equalsIgnoreCase(endPoint))
+                i++;
+            else
+                return true;
+            return false;
+        }
 	}
 	private boolean isRoute(JSONObject route) { return false; }
         
