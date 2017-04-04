@@ -112,25 +112,29 @@ public class DBRouteCache {
         }
     }
 
-    /*private static org.json.JSONArray sortArrayByPopularity (org.json.JSONArray arr) {
-    	org.json.JSONObject max = arr.getJSONObject(0);
-    	for (int i = 0; i<arr.length()-1; i++) {
-    		max = arr.getJSONObject(i);
-    		int lowestIndex = i;
-	    	for(int e = i+1; e<arr.length(); e++) {
-	    		if( arr.getJSONObject(e).getInt("popularity") > max.getInt("popularity") ) {
-	    			lowestIndex = e;
-	    			max = arr.getJSONObject(e);
-	    		}
-	    	}
-	    	if(lowestIndex != i){
-	    		org.json.JSONObject temp = new org.json.JSONObject(arr.getJSONObject(i).toString());
-	    		arr.put(i,max);
-	    		arr.put(lowestIndex, temp);
-	    	}
-	    }
-	    return arr;
-	}*/
+    private void sortArrayByPopularity () {
+    	try {
+            JSONObject max;
+
+            for (int i = 0; i<parsedJSON.length()-1; i++) {
+                max = parsedJSON.getJSONObject(i);
+                int lowestIndex = i;
+                for(int e = i+1; e<parsedJSON.length(); e++) {
+                    if( parsedJSON.getJSONObject(e).getInt("popularity") > max.getInt("popularity") ) {
+                        lowestIndex = e;
+                        max = parsedJSON.getJSONObject(e);
+                    }
+                }
+                if(lowestIndex != i){
+                    org.json.JSONObject temp = new JSONObject(parsedJSON.getJSONObject(i).toString());
+                    parsedJSON.put(i, max);
+                    parsedJSON.put(lowestIndex, temp);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+	}
 	
 	private boolean isRoute(Waypoint startPoint,Waypoint endPoint)
 	{
