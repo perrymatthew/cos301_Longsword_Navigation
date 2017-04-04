@@ -31,7 +31,20 @@ public class DBRouteCache {
         }
 	}
 	
-	public boolean addRoute(ArrayList<Waypoint> nodes) {
+	public boolean addRoute(String route) {
+		System.out.println("Adding a popular route...");
+		try {
+            JSONObject routeObj = new JSONObject(route);
+            if(isRoute(routeObj)) {
+                return false;
+            } else {
+                routeObj.put("popularity", 0);
+                parsedJSON.put(routeObj);
+                manageRoutes();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 		return true;
 	}
 	
