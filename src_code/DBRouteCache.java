@@ -84,22 +84,32 @@ public class DBRouteCache {
 		
 	
     private void manageRoutes () {
-    	/*try {
-	    	JSONParser parser = new JSONParser();
-	    	org.json.simple.JSONArray simpleArr = (org.json.simple.JSONArray) parser.parse(new FileReader("DBRouteCache.json"));
-	    	org.json.JSONArray arr =  new org.json.JSONArray(simpleArr.toJSONString());
-	    	arr = sortArrayByPopularity(arr);
-	    	while(arr.length() > 20) {
-		    	arr.remove(11);
-	    	} 
-	    	try (FileWriter file = new FileWriter("DBRouteCache.json")) {
-				file.write(arr.toString());
-			} catch (Exception e) {
-    			e.printStackTrace();	
-			}
-    	} catch (Exception e) {
-	    	e.printStackTrace();
-    	}*/
+    	System.out.println("Managing popular routes...");
+	    try {
+            sortArrayByPopularity();
+
+            // Create list of JSONObjects from the JSONArray parsedJSON
+            List<JSONObject> result = new ArrayList<JSONObject>(parsedJSON.length());
+
+            // Populate this list
+            for (int i = 0; i < parsedJSON.length(); i++)
+                result.add(parsedJSON.getJSONObject(i));
+
+            // Remove items at index 11 as long as the list size is greater than 20
+            while (result.size() > 20)
+                result.remove(11);
+
+            // Clean out all routes in parsedJSON
+            parsedJSON = new JSONArray();
+
+            // Place the JSONObjects back into the JSONArray parsedJSON
+            for (JSONObject obj : result)
+                parsedJSON.put(obj);
+
+            writeToFile();
+        } catch (Exception e) {
+	        e.printStackTrace();
+        }
     }
 
     /*private static org.json.JSONArray sortArrayByPopularity (org.json.JSONArray arr) {
