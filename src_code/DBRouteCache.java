@@ -1,3 +1,5 @@
+package com.navigation;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +50,36 @@ public class DBRouteCache {
 		return true;
 	}
 	
-	public boolean deleteRoute(Waypoint startPoint, Waypoint endPoint) {
-		return true;
+	public boolean deleteRoute(String startPoint, String endPoint) {
+		System.out.println("Deleting popular route...");
+	    try {
+
+            // Create list of JSONObjects from the JSONArray parsedJSON
+            List<JSONObject> result = new ArrayList<JSONObject>(parsedJSON.length());
+
+            // Populate this list
+            for (int i = 0; i < parsedJSON.length(); i++)
+                result.add(parsedJSON.getJSONObject(i));
+
+            // Remove specified route
+            for(int i = 0; i<result.size(); i++) {
+                JSONArray wps = result.get(i).getJSONArray("waypoints");
+                if(wps.getJSONObject(0).get("name").equals(startPoint) && wps.getJSONObject(wps.length()-1).get("name").equals(endPoint))
+                    result.remove(i);
+            }
+
+            // Clean out all routes in parsedJSON
+            parsedJSON = new JSONArray();
+
+            // Place the JSONObjects back into the JSONArray parsedJSON
+            for (JSONObject obj : result)
+                parsedJSON.put(obj);
+
+            writeToFile();
+        } catch(Exception e) {
+	        e.printStackTrace();
+        }
+        return true;
 	}
 		
 	
