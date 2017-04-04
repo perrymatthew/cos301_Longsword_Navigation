@@ -1,19 +1,35 @@
 import java.io.*;
 import java.util.ArrayList;
-//import org.json.simple.parser.JSONParser;
-//import org.json.simple.*;
-//import org.json.*;
-
-/* Compile with: javac -cp ./*: *.java */
-/* Run with: java -cp ./*: DBRouteCache */
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DBRouteCache {
 
-	/* FOR TESTING PURPOSES */
-	// public static void main(String[] args) {
-	// 	manageRoutes();
-	// }
-	public DBRouteCache(){}
+	JSONArray parsedJSON;
+	private final String FILENAME = "DBRouteCache.json";
+
+	public DBRouteCache(){
+		try {
+            BufferedReader br = null;
+            String tempJSON = "";
+            try { br = new BufferedReader(new FileReader(FILENAME)); }
+            catch (FileNotFoundException e) { e.printStackTrace(); }
+
+            String line = br.readLine();
+            tempJSON = line;
+            while (line != null) {
+                line = br.readLine();
+                tempJSON += line;
+            }
+
+            parsedJSON = new JSONArray(tempJSON);
+            System.out.println(parsedJSON.length()+" Routes Loaded From Cache");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
 	
 	public boolean addRoute(ArrayList<Waypoint> nodes) {
 		return true;
