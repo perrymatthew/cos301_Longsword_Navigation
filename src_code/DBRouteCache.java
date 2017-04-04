@@ -136,30 +136,38 @@ public class DBRouteCache {
         }
 	}
 	
-	private boolean isRoute(Waypoint startPoint,Waypoint endPoint) {
+	private boolean isRoute(String startPoint,String endPoint) {
 	  return true;
 	}
 	private boolean isRoute(JSONObject route) { return false; }
         
-        public Waypoint[] getRoute(Waypoint startPoint, Waypoint endPoint)
-        {
-            Waypoint[] routeWaypoints = null;
-            /*%TODO
-            fetch operation for getting way points
-            */
-            if(isRoute(startPoint, endPoint))
-            {
-                if(calculateDistance(startPoint, endPoint))
-                {
-                    return routeWaypoints;
+    public String getRoute(String startPoint, String endPoint) {
+        System.out.println("Retrieving route from cache...");
+        String route = "";
+        try {
+
+            for (int i = 0; i < parsedJSON.length(); i++) {                                 // Iterate through all routes
+                JSONObject aRoute = parsedJSON.getJSONObject(i);               // A route
+                JSONArray routesWps = aRoute.getJSONArray("waypoints");    // Array of waypoints
+
+                // First waypoint's name
+                String startWpName = routesWps.getJSONObject(0).getString("name");
+
+                // Last waypoint's name
+                String endWpName = routesWps.getJSONObject(routesWps.length() - 1).getString("name");
+
+                if (startPoint.equals(startWpName) && endPoint.equals(endWpName)) {
+                    increasePopularity(aRoute);
+                    route = aRoute.toString();
+                    break;
                 }
-                
-                return routeWaypoints;
             }
-
-
-            return routeWaypoints;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        return route;
+    }
         
         private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint)
         {
