@@ -169,14 +169,24 @@ public class DBRouteCache {
         return route;
     }
         
-        private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint)
+    /*private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint) {
+        boolean success = true;
+        if(startPoint.getOperational() && endPoint.getOperational())
         {
-            boolean success = true;
-            if(startPoint.getOperational() && endPoint.getOperational())
-            {
-                
-            }
             
-            return success;
         }
+        
+        return success;
+    }*/
+
+    private void increasePopularity(JSONObject route) {
+        System.out.println("Increasing route popularity...");
+        try {
+            Integer popularity = route.getInt("popularity")+1;
+            route.put("popularity", popularity);
+            writeToFile();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
