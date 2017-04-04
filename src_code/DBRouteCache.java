@@ -157,7 +157,10 @@ public class DBRouteCache {
             return false;
         }
 	}
-	private boolean isRoute(JSONObject route) { return false; }
+	private boolean isRoute(JSONObject route) {
+	    wps = route.getJSONArray()
+	    return isRoute(wps.getString(0), wps.getString(wps.length()));
+	}
         
     public String getRoute(String startPoint, String endPoint) {
         System.out.println("Retrieving route from cache...");
