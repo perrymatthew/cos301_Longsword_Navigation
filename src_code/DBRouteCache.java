@@ -136,10 +136,10 @@ public class DBRouteCache {
         }
 	}
 	
-	private boolean isRoute(Waypoint startPoint,Waypoint endPoint)
-	{
+	private boolean isRoute(Waypoint startPoint,Waypoint endPoint) {
 	  return true;
 	}
+	private boolean isRoute(JSONObject route) { return false; }
         
         public Waypoint[] getRoute(Waypoint startPoint, Waypoint endPoint)
         {
