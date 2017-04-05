@@ -148,9 +148,9 @@ public class DBRouteCache {
         for(int i = 0; i < result.size(); )
         {
             JSONArray wps = result.get(i).getJSONArray("waypoints");
-            if (!wps.getString(0).equalsIgnoreCase(startPoint))
+            if (!wps.get(0).name.equalsIgnoreCase(startPoint))
                 i++;
-            else if(!wps.getString(wps.length()).equalsIgnoreCase(endPoint))
+            else if(!wps.get(wps.length()-1).name.equalsIgnoreCase(endPoint))
                 i++;
             else
                 return true;
@@ -158,7 +158,7 @@ public class DBRouteCache {
         }
 	}
 	private boolean isRoute(JSONObject route) {
-	    wps = route.getJSONArray()
+	    JSONArray wps = route.getJSONArray()
 	    return isRoute(wps.getString(0), wps.getString(wps.length()));
 	}
         
