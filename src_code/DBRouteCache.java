@@ -16,8 +16,7 @@ public class DBRouteCache {
 		try {
             BufferedReader br = null;
             String tempJSON = "";
-            try { br = new BufferedReader(new FileReader(FILENAME)); }
-            catch (FileNotFoundException e) { e.printStackTrace(); }
+            br = new BufferedReader(new FileReader(FILENAME));
 
             String line = br.readLine();
             tempJSON = line;
