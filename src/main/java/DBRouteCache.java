@@ -1,5 +1,3 @@
-package com.navigation;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +134,7 @@ public class DBRouteCache {
         }
 	}
 	
-	private boolean isRoute(String startPoint,String endPoint) {
+	private boolean isRoute(String startPoint,String endPoint) throws JSONException {
         // Create list of JSONObjects from the JSONArray parsedJSON
         List<JSONObject> result = new ArrayList<JSONObject>(parsedJSON.length());
 
@@ -157,9 +155,9 @@ public class DBRouteCache {
             return false;
         }
 	}
-	private boolean isRoute(JSONObject route) {
-	    JSONArray wps = route.getJSONArray()
-	    return isRoute(wps.getString(0), wps.getString(wps.length()));
+	private boolean isRoute(JSONObject route) throws JSONException {
+	    JSONArray wps = route.getJSONArray("waypoints");
+        return isRoute(wps.getString(0), wps.getString(wps.length()));
 	}
         
     public String getRoute(String startPoint, String endPoint) {
