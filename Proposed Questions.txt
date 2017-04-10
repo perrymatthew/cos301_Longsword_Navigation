@@ -1,0 +1,4 @@
+
+What is modifyRoute exactly? Automatic recalculation? Or move nodes around?
+What is savePreference? shortestRoute selection, simplest route selection, and fastestRoute selection?
+What’s the cache used for attached to the navigation module? Should routes be saved to a database? 
