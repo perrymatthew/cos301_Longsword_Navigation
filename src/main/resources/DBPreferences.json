@@ -1,0 +1,14 @@
+[
+    {
+        "userID":"mememachine",
+        "pref1":true,
+        "pref2":true,
+        "pref3":false
+    },
+    {
+        "userID":"swag-7",
+        "pref1":true,
+        "pref2":false,
+        "pref3":false
+    }
+]

@@ -1,6 +1,7 @@
+
 import java.util.ArrayList;
 
-public class Navigation implements IntegrationInterface{
+public class Navigation {
 
     private DBPreferences user_Pref = new DBPreferences();
     private DBRouteCache cache = new DBRouteCache();
@@ -15,19 +16,19 @@ public class Navigation implements IntegrationInterface{
         return result.getRoute();
     }
 
-    public boolean addPref (boolean[] pref) {
+    public boolean addPref(boolean[] pref) {
         user_Pref.addPref("", pref);
 
         return true;
     }
 
-    public boolean addCache (ArrayList<Waypoint> list) {
+    public boolean addCache(ArrayList<Waypoint> list) {
         cache.addRoute(list);
 
         return true;
     }
 
-    public void getFromAccess (Waypoint s, Waypoint e) {
+    public void getFromAccess(Waypoint s, Waypoint e) {
         start = s;
         end = e;
 
@@ -35,18 +36,17 @@ public class Navigation implements IntegrationInterface{
         System.out.println("End Node: " + e.getName() + "\n");
     }
 
-    public void buildRoute () {
+    public void buildRoute() {
         if (!result.isEmpty()) {
 
             result.clearRoute();
             result = new RouteObj(calculate.calculateRoute(start, end, listOfNodes, user_Pref));
-        }
-        else {
+        } else {
             result = new RouteObj(calculate.calculateRoute(start, end, listOfNodes, user_Pref));
         }
     }
 
-    public String displayRoute(){
+    public String displayRoute() {
         String dis = "Route: \n";
 
         for (int i = 0; i < result.route.size(); i++) {
@@ -59,10 +59,10 @@ public class Navigation implements IntegrationInterface{
 
         if (result.route.size() != 0) {
             dis += "Total Distance: " + val.toString() + "\n";
-        }
-        else {
+        } else {
             dis = "Empty Route \n";
         }
 
         return dis;
     }
+}
