@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9cc6dae8-a682-4a6a-bd5a-d6ae40c0472b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/NavUP/Interfaces/NavigationModule/SQLRouteCache.java" afterPath="$PROJECT_DIR$/src/main/java/NavUP/Interfaces/NavigationModule/SQLRouteCache.java" />
-    </list>
+    <list default="true" id="9cc6dae8-a682-4a6a-bd5a-d6ae40c0472b" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -946,12 +943,12 @@
       <workItem from="1491845907625" duration="3514000" />
       <workItem from="1492088113812" duration="311000" />
       <workItem from="1492088490778" duration="3671000" />
-      <workItem from="1492098718647" duration="1061000" />
+      <workItem from="1492098718647" duration="1091000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10909000" />
+    <option name="totallyTimeSpent" value="10939000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
