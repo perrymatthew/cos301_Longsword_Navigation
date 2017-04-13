@@ -18,5 +18,13 @@ public class SQLRouteCache {
         }
     }
 
-    
+    public boolean addRoute(String route) throws SQLException {
+        String start, end;
+        int pop = 0;
+
+        String query = "insert into routecache (routeString, startPoint, endPoint, popularity)\n" +
+                "values (\"" + route + "\",\"" + start + "\",\"" + end + "\"," + pop + ");";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+    }
 }
