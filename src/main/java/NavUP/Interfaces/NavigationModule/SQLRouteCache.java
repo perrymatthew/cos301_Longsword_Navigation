@@ -1,15 +1,23 @@
 /**
  * @author Matthew Perry
+ * @version 1
+ *
  */
 
 /**
  * Package for Navigation Module
+ *
  */
 package NavUP.Interfaces.NavigationModule;
 
 /**
  * Import libraries for SQL interaction
+ *
  */
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.*;
 
@@ -24,7 +32,7 @@ public class SQLRouteCache {
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "root";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
-    Connection connection;
+    private Connection connection;`
 
     /**
      * Default constructor
@@ -47,16 +55,32 @@ public class SQLRouteCache {
      * @param route
      */
     public void addRoute(String route) {
-        String start = "";
-        String end = "";
+        String start;
+        String end;
         int pop = 0;
 
         try {
-            String query = "insert into routecache (routeString, startPoint, endPoint, popularity)\n" + "values (\"" + route + "\",\"" + start + "\",\"" + end + "\"," + pop + ");";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-        }
-        catch (SQLException e){
+            JSONObject json = new JSONObject(route);
+            JSONArray routeObj = json.getJSONArray("route");
+            int length = json.getInt("length");
+            start = routeObj.getJSONObject(0).getDouble("lat") + "," +
+                    routeObj.getJSONObject(0).getDouble("long");
+            end = routeObj.getJSONObject(length).getDouble("lat") + "," +
+                    routeObj.getJSONObject(length).getDouble("long");
+
+            try {
+                String query;
+                query = "INSERT INTO `routecache`(routeString, startPoint, endPoint, popularity) VALUE (?, ?, ?, ?)";
+                PreparedStatement insert = connection.prepareStatement(query);
+                insert.setString(1, route);
+                insert.setString(2, start);
+                insert.setString(3, end);
+                insert.setInt(4, pop);
+            }
+            catch (SQLException e){
+                System.out.println("Add route failure: " + e.toString());
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
