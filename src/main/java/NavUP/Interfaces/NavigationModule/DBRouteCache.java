@@ -1,5 +1,5 @@
-package com.navigation;
-
+//Will not be included in the Master Branch (code will be used in the SQL java classes as well as Navigation
+/*
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,10 +135,31 @@ public class DBRouteCache {
         }
 	}
 	
-	private boolean isRoute(String startPoint,String endPoint) {
-	  return true;
+	private boolean isRoute(String startPoint,String endPoint) throws JSONException {
+        // Create list of JSONObjects from the JSONArray parsedJSON
+        List<JSONObject> result = new ArrayList<JSONObject>(parsedJSON.length());
+
+        // Populate this list
+        for (int i = 0; i < parsedJSON.length(); i++)
+            result.add(parsedJSON.getJSONObject(i));
+
+        //Search these routes
+        for(int i = 0; i < result.size(); )
+        {
+            JSONArray wps = result.get(i).getJSONArray("waypoints");
+            if (!wps.get(0).name.equalsIgnoreCase(startPoint))
+                i++;
+            else if(!wps.get(wps.length()-1).name.equalsIgnoreCase(endPoint))
+                i++;
+            else
+                return true;
+            return false;
+        }
 	}
-	private boolean isRoute(JSONObject route) { return false; }
+	private boolean isRoute(JSONObject route) throws JSONException {
+	    JSONArray wps = route.getJSONArray("waypoints");
+        return isRoute(wps.getString(0), wps.getString(wps.length()));
+	}
         
     public String getRoute(String startPoint, String endPoint) {
         System.out.println("Retrieving route from cache...");
@@ -168,7 +189,7 @@ public class DBRouteCache {
         return route;
     }
         
-    /*private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint) {
+    private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint) {
         boolean success = true;
         if(startPoint.getOperational() && endPoint.getOperational())
         {
@@ -176,7 +197,7 @@ public class DBRouteCache {
         }
         
         return success;
-    }*/
+    }
 
     private void increasePopularity(JSONObject route) {
         System.out.println("Increasing route popularity...");
@@ -200,3 +221,4 @@ public class DBRouteCache {
         }
     }
 }
+*/

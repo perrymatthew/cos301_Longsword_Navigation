@@ -1,0 +1,16 @@
+{
+    "route":
+    [
+        {
+            "length": "double",
+            "waypoints":
+            [
+                {
+                    "lat": "double",
+                    "long": "double"
+                }
+            ]
+        }
+
+    ]
+}
