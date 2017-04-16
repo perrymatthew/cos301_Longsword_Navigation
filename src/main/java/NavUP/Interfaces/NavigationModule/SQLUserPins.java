@@ -22,6 +22,9 @@ public class SQLUserPins {
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     private Connection connection;
 
+    /**
+     * The SQLUserPins constructor which connects to the SQL database
+     */
     public SQLUserPins() {
         try {
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
@@ -32,5 +35,7 @@ public class SQLUserPins {
             e.printStackTrace();
         }
     }
+
+
 
 }
