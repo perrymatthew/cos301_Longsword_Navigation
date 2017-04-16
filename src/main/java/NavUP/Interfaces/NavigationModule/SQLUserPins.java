@@ -6,6 +6,8 @@
 
 package NavUP.Interfaces.NavigationModule;
 
+import org.json.JSONObject;
+
 import java.sql.*;
 
 /**
@@ -36,6 +38,32 @@ public class SQLUserPins {
         }
     }
 
+    /**
+     * Adds a pin to the SQL users pin table
+     * @param pin The JSON string specifying the pin and user information
+     */
+    public void dropPin(String pin) {
+        try {
 
+            JSONObject json = new JSONObject(pin);
+
+            String userIdVar = json.getString("userID");
+            Double latVar = json.getDouble("lat");
+            Double lonVar = json.getDouble("long");
+            String pinNameVar = json.getString("customName");
+
+            String query = "INSERT INTO `userpins`(userID, lat, lon, customName) VALUE (?, ?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, latVar);
+            insert.setDouble(3, lonVar);
+            insert.setString(4, pinNameVar);
+            insert.executeUpdate();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
