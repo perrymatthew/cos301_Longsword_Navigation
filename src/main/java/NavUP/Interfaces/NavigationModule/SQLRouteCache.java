@@ -50,6 +50,10 @@ public class SQLRouteCache {
         }
     }
 
+    private boolean isRoute(String startPoint,String endPoint) {
+        
+    }
+    
     /**
      * Add route function to add the route to the SQL DB
      * @param route this is a JSON String that serves as the route.
