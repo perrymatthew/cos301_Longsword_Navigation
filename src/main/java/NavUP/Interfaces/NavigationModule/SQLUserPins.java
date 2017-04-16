@@ -63,7 +63,33 @@ public class SQLUserPins {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * Removes a specific pin from SQL user pins table
+     * @param pin The pin that should be found and removed
+     */
+    public void removePin(String pin) {
+        try {
+
+            JSONObject json = new JSONObject(pin);
+
+            String userIdVar = json.getString("userID");
+            Double latVar = json.getDouble("lat");
+            Double lonVar = json.getDouble("long");
+            String pinNameVar = json.getString("customName");
+
+            String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND customName=?;";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, latVar);
+            insert.setDouble(3, lonVar);
+            insert.setString(4, pinNameVar);
+            insert.executeUpdate();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
