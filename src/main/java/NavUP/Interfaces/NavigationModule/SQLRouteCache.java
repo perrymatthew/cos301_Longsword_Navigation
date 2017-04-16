@@ -126,19 +126,21 @@ public class SQLRouteCache {
     }
 
     /**
-     * Get route function to get the route to the SQL DB
-     * @param route
-     * @return
+     * Get route function to get the route from the SQL DB
+     * @param start The start waypoint
+     * @param end The end waypoint
+     * @return The JSON string of the found route or an empty string if it is not found
      */
-    public String getCachedRoute(String route) {
+    public String getCachedRoute(String start, String end) {
         String cache = "";
-        String start = "";
-        String end = "";
 
         try {
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM `routecache` WHERE startPoint=? AND endPoint=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, start);
+            select.setString(2, end);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("routeString");
         }
         catch (SQLException e){
             e.printStackTrace();
