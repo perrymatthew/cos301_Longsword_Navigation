@@ -48,3 +48,53 @@ public class SQLUserPreferences {
             String userIdVar = json.getString("userID");
             Double userPref = json.getDouble("preferences");
             Boolean boolReceived = json.getBoolean("restrictions");
+            Integer userRestrictions = boolReceived.compareTo(true);
+            String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, userPref);
+            insert.setDouble(3, userRestrictions);
+            insert.executeUpdate();
+//            JSONArray pinsArray = new JSONArray();
+//            String query = "";
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(query);
+        }
+        catch (Exception e){
+            //Throw exception if connection failed
+            e.printStackTrace();
+        }
+    }
+
+    //Update preference function to update the preference of a user to the SQL DB
+    public void updatePreference(String pref) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+
+        //Try Catch block for error handling
+        try {
+            //Removing the route from the DB
+            String query = "";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+        }
+        catch (SQLException e){
+            //Throw exception if connection failed
+            e.printStackTrace();
+        }
+    }
+
+    //Get user function to get the user from the SQL DB
+    public String getUser(String user) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+        //Variable to return user in JSON format
+        String client = "";
+
+        //Try Catch block for error handling
+        try {
+            //Retrieve the route from the DB
