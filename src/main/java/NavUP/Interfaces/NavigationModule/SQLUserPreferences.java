@@ -2,6 +2,9 @@
 package NavUP.Interfaces.NavigationModule;
 
 //Import libraries for SQL interaction
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.*;
 
 //Class to manage SQL DB for user preferences and favourite routes
@@ -39,11 +42,25 @@ public class SQLUserPreferences {
         //Try Catch block for error handling
         try {
             //Adding the route to the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+
+            JSONObject json = new JSONObject(user);
+
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            Boolean boolReceived = json.getBoolean("restrictions");
+            Integer userRestrictions = boolReceived.compareTo(true);
+            String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, userPref);
+            insert.setDouble(3, userRestrictions);
+            insert.executeUpdate();
+//            JSONArray pinsArray = new JSONArray();
+//            String query = "";
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(query);
         }
-        catch (SQLException e){
+        catch (Exception e){
             //Throw exception if connection failed
             e.printStackTrace();
         }
