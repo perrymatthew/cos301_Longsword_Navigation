@@ -75,9 +75,10 @@ public class SQLUserPins {
             JSONObject json = new JSONObject(pin);
 
             String userIdVar = json.getString("userID");
-            Double latVar = json.getDouble("lat");
-            Double lonVar = json.getDouble("long");
-            String pinNameVar = json.getString("customName");
+            JSONObject pinVar = json.getJSONObject("pin");
+            Double latVar = pinVar.getDouble("lat");
+            Double lonVar = pinVar.getDouble("long");
+            String pinNameVar = pinVar.getString("customName");
 
             String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND customName=?;";
             PreparedStatement insert = connection.prepareStatement(query);
