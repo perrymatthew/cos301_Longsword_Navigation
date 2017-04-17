@@ -6,8 +6,8 @@
 
 package NavUP.Interfaces.NavigationModule;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.sql.*;
 
 /**
@@ -48,9 +48,10 @@ public class SQLUserPins {
             JSONObject json = new JSONObject(pin);
 
             String userIdVar = json.getString("userID");
-            Double latVar = json.getDouble("lat");
-            Double lonVar = json.getDouble("long");
-            String pinNameVar = json.getString("customName");
+            JSONObject pinVar = json.getJSONObject("pin");
+            Double latVar = pinVar.getDouble("lat");
+            Double lonVar = pinVar.getDouble("long");
+            String pinNameVar = pinVar.getString("customName");
 
             String query = "INSERT INTO `userpins`(userID, lat, lon, customName) VALUE (?, ?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
@@ -75,9 +76,10 @@ public class SQLUserPins {
             JSONObject json = new JSONObject(pin);
 
             String userIdVar = json.getString("userID");
-            Double latVar = json.getDouble("lat");
-            Double lonVar = json.getDouble("long");
-            String pinNameVar = json.getString("customName");
+            JSONObject pinVar = json.getJSONObject("pin");
+            Double latVar = pinVar.getDouble("lat");
+            Double lonVar = pinVar.getDouble("long");
+            String pinNameVar = pinVar.getString("customName");
 
             String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND customName=?;";
             PreparedStatement insert = connection.prepareStatement(query);
@@ -90,6 +92,43 @@ public class SQLUserPins {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * Gets all pins belonging to a specific user
+     * @param userId The userId of the user whose pins should be fetched
+     * @return A JSON string of the pins belonging to the user
+     */
+    public String getUserPins(String userId) {
+        try {
+
+            String query = "SELECT * FROM `userpins` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, userId);
+            ResultSet rs = select.executeQuery(query);
+
+            JSONArray pinsArray = new JSONArray();
+
+            while(rs.next()) {
+
+                JSONObject pinObj = new JSONObject();
+
+                pinObj.put("lat", rs.getDouble("lat"));
+                pinObj.put("lon", rs.getDouble("lon"));
+                pinObj.put("customName", rs.getString("customName"));
+
+                pinsArray.put(pinObj);
+            }
+            JSONObject returnObj = new JSONObject();
+            returnObj.put("pins", pinsArray);
+
+            return returnObj.toString();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }
