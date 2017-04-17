@@ -30,3 +30,11 @@ public class SQLUserPreferences {
             //Throw exception if connection failed
             e.printStackTrace();
         }
+    }
+
+    //Add user function to add the user to the SQL DB
+    public void addUser(String user) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
