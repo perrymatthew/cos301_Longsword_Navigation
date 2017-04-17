@@ -100,13 +100,76 @@ public class SQLRouteCache {
         } catch (JSONException e) {
             System.out.println("Add route JSON failure: " + e.toString());
         }
+        this.manageRoutes();
+    }
+
+    /**
+     * Get route function to get the route from the SQL DB
+     * @param start The start waypoint
+     * @param end The end waypoint
+     * @return The JSON string of the found route or an empty string if it is not found
+     */
+    public String getCachedRoute(String start, String end) {
+        String cache = "";
+
+        try {
+            String query = "SELECT * FROM `routecache` WHERE startPoint=? AND endPoint=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, start);
+            select.setString(2, end);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("routeString");
+            int id = rs.getInt("idrouteCache");
+            /**
+             * If the route is found in the database, increase its popularity.
+             */
+            if (!cache.equals(""))
+            {
+                query = "UPDATE 'routecache' \n" +
+                        "  SET popularity = routecache.popularity + 1 \n" +
+                        "  WHERE id = ?";
+                PreparedStatement update = connection.prepareStatement(query);
+                update.setInt(1, id);
+                update.executeUpdate();
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return cache;
+    }
+
+    /**
+     * This method is dedicated to managing the number of routes that are stored in the cache. After a route is added,
+     * this method is called and will decide which route to then remove. It then calls removeRoute() for the route that
+     * has been decided to be removed.
+     */
+    private void manageRoutes()
+    {
+        String queryStr = "SELECT * FROM 'routecache';";
+        try {
+            PreparedStatement query = connection.prepareStatement(queryStr);
+            ResultSet rs = query.executeQuery();
+            if (rs.getRow() > 20)
+            {
+                String sort = "SELECT TOP 12 idrouteCache, popularity FROM routecache ORDER BY popularity;";
+                query = connection.prepareStatement(sort);
+                rs = query.executeQuery();
+                rs.last();
+                int id = rs.getInt(1);
+                this.removeRoute(id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Remove route function to remove the route to the SQL DB.
      * @param route this is a JSON String that serves as the route.
      */
-    public void removeRoute(String route) {
+    private void removeRoute(String route) {
         String start;
         String end;
 
@@ -135,43 +198,5 @@ public class SQLRouteCache {
         catch (JSONException e) {
             System.out.println("Remove route JSON failure: " + e.toString());
         }
-    }
-
-    /**
-     * Get route function to get the route from the SQL DB
-     * @param start The start waypoint
-     * @param end The end waypoint
-     * @return The JSON string of the found route or an empty string if it is not found
-     */
-    public String getCachedRoute(String start, String end) {
-        String cache = "";
-
-        try {
-            String query = "SELECT * FROM `routecache` WHERE startPoint=? AND endPoint=?";
-            PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, start);
-            select.setString(2, end);
-            ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("routeString");
-            int id = rs.getInt("idrouteCache");
-            if (!cache.equals(""))
-            {
-                query = "UPDATE 'routecache' \n" +
-                        "  SET popularity = routecache.popularity + 1 \n" +
-                        "  WHERE id = ?";
-                PreparedStatement update = connection.prepareStatement(query);
-                update.setInt(1, id);
-                update.executeUpdate();
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return cache;
-    }
-
-    private void manageRoutes()
-    {
-
     }
 }
