@@ -69,3 +69,12 @@ public class SQLUserPreferences {
     //Update preference function to update the preference of a user to the SQL DB
     public void updatePreference(String pref) throws SQLException {
         try {
+            //Adding the route to the DB
+
+            JSONObject json = new JSONObject(pref);
+
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+//            Boolean boolReceived = json.getBoolean("restrictions");
+//            Integer userRestrictions = boolReceived.compareTo(true);
+//            UPDATE Customers
