@@ -1,3 +1,5 @@
+//Will not be included in the Master Branch (code will be used in the SQL java classes as well as Navigation
+/*
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +16,7 @@ public class DBRouteCache {
 		try {
             BufferedReader br = null;
             String tempJSON = "";
-            try { br = new BufferedReader(new FileReader(FILENAME)); }
-            catch (FileNotFoundException e) { e.printStackTrace(); }
+            br = new BufferedReader(new FileReader(FILENAME));
 
             String line = br.readLine();
             tempJSON = line;
@@ -188,7 +189,7 @@ public class DBRouteCache {
         return route;
     }
         
-    /*private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint) {
+    private boolean calculateDistance(Waypoint startPoint, Waypoint endPoint) {
         boolean success = true;
         if(startPoint.getOperational() && endPoint.getOperational())
         {
@@ -196,7 +197,7 @@ public class DBRouteCache {
         }
         
         return success;
-    }*/
+    }
 
     private void increasePopularity(JSONObject route) {
         System.out.println("Increasing route popularity...");
@@ -220,3 +221,4 @@ public class DBRouteCache {
         }
     }
 }
+*/
