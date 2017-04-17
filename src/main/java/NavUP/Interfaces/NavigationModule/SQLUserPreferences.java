@@ -2,6 +2,9 @@
 package NavUP.Interfaces.NavigationModule;
 
 //Import libraries for SQL interaction
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.*;
 
 //Class to manage SQL DB for user preferences and favourite routes
@@ -39,81 +42,9 @@ public class SQLUserPreferences {
         //Try Catch block for error handling
         try {
             //Adding the route to the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-        }
-        catch (SQLException e){
-            //Throw exception if connection failed
-            e.printStackTrace();
-        }
-    }
 
-    //Update preference function to update the preference of a user to the SQL DB
-    public void updatePreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
+            JSONObject json = new JSONObject(user);
 
-        //Try Catch block for error handling
-        try {
-            //Removing the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-        }
-        catch (SQLException e){
-            //Throw exception if connection failed
-            e.printStackTrace();
-        }
-    }
-
-    //Get user function to get the user from the SQL DB
-    public String getUser(String user) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return user in JSON format
-        String client = "";
-
-        //Try Catch block for error handling
-        try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-        }
-        catch (SQLException e){
-            //Throw exception if connection failed
-            e.printStackTrace();
-        }
-        //Return the JSON formatted route
-        return client;
-    }
-
-    //Get preference function to get the user's preference from the SQL DB
-    public String getPreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return preference in JSON format
-        String preference = "";
-
-        //Try Catch block for error handling
-        try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-        }
-        catch (SQLException e){
-            //Throw exception if connection failed
-            e.printStackTrace();
-        }
-        //Return the JSON formatted route
-        return preference;
-    }
-}
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            Boolean boolReceived = json.getBoolean("restrictions");
