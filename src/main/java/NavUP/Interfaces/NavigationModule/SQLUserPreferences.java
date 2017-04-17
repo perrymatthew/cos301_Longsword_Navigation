@@ -39,6 +39,8 @@ public class SQLUserPreferences {
         //Variable for the user's preference
         String user_Pref = "";
 
+        currentUser = user;
+
         //Try Catch block for error handling
         try {
             //Adding the route to the DB
@@ -136,9 +138,9 @@ public class SQLUserPreferences {
         boolean resValue = false;
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE user_ID=?";
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, pref);
+            select.setString(1, user_ID);
             ResultSet rs = select.executeQuery(query);
             cache = rs.getString("prefString");
         }
@@ -148,4 +150,6 @@ public class SQLUserPreferences {
 
         return resValue;
     }
+
+    private String currentUser;
 }
