@@ -56,12 +56,24 @@ public class SQLUserPreferences {
         //Variable for the user's preference
         String user_Pref = "";
 
+
+
         //Try Catch block for error handling
         try {
-            //Removing the route from the DB
-            String query = "";
+            boolean resStat = isRestricted(pref);
+            String query = "SELECT * FROM `preferences` WHERE userID = user_ID";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
+            //Removing the route from the DB
+
+            String aquery = "INSERT INTO `preferences` (userID, restrictions, preferences) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(aquery);
+            insert.setString(1, user_ID);
+            insert.setBoolean(2, resStat);
+            insert.setString(3, pref);
+            insert.executeUpdate();
+
+
         }
         catch (SQLException e){
             //Throw exception if connection failed
@@ -115,5 +127,11 @@ public class SQLUserPreferences {
         }
         //Return the JSON formatted route
         return preference;
+    }
+
+    public boolean isRestricted(String pref)
+    {
+        //get restriction
+        return true;
     }
 }
