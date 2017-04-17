@@ -22,3 +22,11 @@ public class SQLUserPreferences {
         //Try Catch block for error handling
         try {
             //Establish connection to teh DB
+            connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            Class.forName(myDriver);
+            System.out.println("Connected to Database");
+        }
+        catch (Exception e) {
+            //Throw exception if connection failed
+            e.printStackTrace();
+        }
