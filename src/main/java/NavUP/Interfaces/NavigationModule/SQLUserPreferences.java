@@ -18,17 +18,7 @@ public class SQLUserPreferences {
         try {
             //Retrieve the route from the DB
             String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-        }
-        catch (SQLException e){
-            //Throw exception if connection failed
-            e.printStackTrace();
-        }
-        //Return the JSON formatted route
-        return client;
-    }
-
+        
     //Get preference function to get the user's preference from the SQL DB
     public String getPreference(String pref) throws SQLException {
         //Variable for the user's ID
