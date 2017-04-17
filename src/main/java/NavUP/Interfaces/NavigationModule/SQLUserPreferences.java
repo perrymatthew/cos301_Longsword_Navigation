@@ -54,3 +54,11 @@ public class SQLUserPreferences {
             insert.setString(1, userIdVar);
             insert.setDouble(2, userPref);
             insert.setBoolean(3, userRestrictions);
+            insert.executeUpdate();
+//            JSONArray pinsArray = new JSONArray();
+//            String query = "";
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(query);
+        }
+        catch (Exception e){
+            //Throw exception if connection failed
