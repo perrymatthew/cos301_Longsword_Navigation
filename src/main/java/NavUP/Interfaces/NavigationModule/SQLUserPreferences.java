@@ -1,13 +1,5 @@
 //Package for Navigation Module
-package NavUP.Interfaces.NavigationModule;
-
-//Import libraries for SQL interaction
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.sql.*;
-
-//Class to manage SQL DB for user preferences and favourite routes
+ user preferences and favourite routes
 public class SQLUserPreferences {
     //Variables to connect to the DB
     private final static String DB_URL = "";
