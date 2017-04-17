@@ -111,26 +111,19 @@ public class SQLUserPreferences {
     }
 
     //Get preference function to get the user's preference from the SQL DB
-    public String getPreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return preference in JSON format
-        String preference = "";
+    public String getPreference(String pref) throws SQLException {//convert to JSON?
+         String cache = "";
 
-        //Try Catch block for error handling
         try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, pref);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("prefString");
         }
         catch (SQLException e){
-            //Throw exception if connection failed
             e.printStackTrace();
         }
-        //Return the JSON formatted route
-        return preference;
+        return cache;
     }
 }
