@@ -39,7 +39,7 @@ public class SQLUserPreferences {
         //Variable for the user's preference
         String user_Pref = "";
 
-        currentUser = user;
+       
 
         //Try Catch block for error handling
         try {
@@ -151,5 +151,5 @@ public class SQLUserPreferences {
         return resValue;
     }
 
-    private String currentUser;
+    //private  currentUser;
 }
