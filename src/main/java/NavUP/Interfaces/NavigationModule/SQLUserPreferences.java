@@ -38,3 +38,11 @@ public class SQLUserPreferences {
         String user_ID = "";
         //Variable for the user's preference
         String user_Pref = "";
+
+        //Try Catch block for error handling
+        try {
+            //Adding the route to the DB
+
+            JSONObject json = new JSONObject(user);
+
+            String userIdVar = json.getString("userID");
