@@ -78,3 +78,65 @@ public class SQLUserPreferences {
 //            Boolean boolReceived = json.getBoolean("restrictions");
 //            Integer userRestrictions = boolReceived.compareTo(true);
 //            UPDATE Customers
+//            SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+//            WHERE CustomerID = 1;
+            String query = "UPDATE `preferences` SET preferences = ? WHERE userID = ?";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setDouble(1, userPref);
+            insert.setString(2, userIdVar);
+            insert.executeUpdate();
+        }
+        catch (Exception e){
+            //Throw exception if connection failed
+            e.printStackTrace();
+        }
+    }
+
+    //Get user function to get the user from the SQL DB
+    public String getUser(String user) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+        //Variable to return user in JSON format
+        String client = "";
+
+        //Try Catch block for error handling
+        try {
+            //Retrieve the route from the DB
+            String query = "";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+        }
+        catch (SQLException e){
+            //Throw exception if connection failed
+            e.printStackTrace();
+        }
+        //Return the JSON formatted route
+        return client;
+    }
+
+    //Get preference function to get the user's preference from the SQL DB
+    public String getPreference(String pref) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+        //Variable to return preference in JSON format
+        String preference = "";
+
+        //Try Catch block for error handling
+        try {
+            //Retrieve the route from the DB
+            String query = "";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+        }
+        catch (SQLException e){
+            //Throw exception if connection failed
+            e.printStackTrace();
+        }
+        //Return the JSON formatted route
+        return preference;
+    }
+}
