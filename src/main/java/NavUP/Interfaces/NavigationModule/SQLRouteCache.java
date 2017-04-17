@@ -52,9 +52,9 @@ public class SQLRouteCache {
     
     /**
      * isRoute function to check if route exists in the SQL DB
-     * @param start The start waypoint
-     * @param end The end waypoint
-     * @return true if route exists, false otherwise
+     * @param startPoint The start waypoint
+     * @param end The endPoint waypoint
+     * @return true if route already exists, false otherwise
      */
     private boolean isRoute(String startPoint,String endPoint) {
         return false;
