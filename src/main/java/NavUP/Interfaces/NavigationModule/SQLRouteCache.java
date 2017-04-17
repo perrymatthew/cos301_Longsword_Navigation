@@ -199,4 +199,23 @@ public class SQLRouteCache {
             System.out.println("Remove route JSON failure: " + e.toString());
         }
     }
+
+    /**
+     * Remove route function to remove the route to the SQL DB.
+     * @param routeID This int is the unique ID that is the Primary key for a route.
+     */
+    private void removeRoute(int routeID)
+    {
+        try {
+            String query;
+            query = "DELETE FROM `routecache` WHERE idrouteCache = ?;";
+            PreparedStatement remove = connection.prepareStatement(query);
+            remove.setInt(1, routeID);
+            remove.executeUpdate();
+
+        }
+        catch (SQLException e){
+            System.out.println("Remove route SQL failure: " + e.toString());
+        }
+    }
 }
