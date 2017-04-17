@@ -68,6 +68,12 @@ public class SQLUserPreferences {
 
     //Update preference function to update the preference of a user to the SQL DB
     public void updatePreference(String pref) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+
+        //Try Catch block for error handling
         try{
             boolean resStat = isRestricted(pref);
             String query = "SELECT * FROM `preferences` WHERE userID = user_ID";
