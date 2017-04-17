@@ -47,13 +47,13 @@ public class SQLUserPreferences {
 
             String userIdVar = json.getString("userID");
             Double userPref = json.getDouble("preferences");
-            Boolean boolReceived = json.getBoolean("restrictions");
-            Integer userRestrictions = boolReceived.compareTo(true);
+            Boolean userRestrictions = json.getBoolean("restrictions");
+//            Integer userRestrictions = boolReceived.compareTo(true);
             String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
             insert.setString(1, userIdVar);
             insert.setDouble(2, userPref);
-            insert.setDouble(3, userRestrictions);
+            insert.setBoolean(3, userRestrictions);
             insert.executeUpdate();
 //            JSONArray pinsArray = new JSONArray();
 //            String query = "";
@@ -68,31 +68,9 @@ public class SQLUserPreferences {
 
     //Update preference function to update the preference of a user to the SQL DB
     public void updatePreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-
-
-
-        //Try Catch block for error handling
-        try {
-            boolean resStat = isRestricted(pref);
-            String query = "SELECT * FROM `preferences` WHERE userID = user_ID";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            //Removing the route from the DB
-
-            String aquery = "INSERT INTO `preferences` (userID, restrictions, preferences) VALUE (?, ?, ?)";
-            PreparedStatement insert = connection.prepareStatement(aquery);
-            insert.setString(1, user_ID);
-            insert.setBoolean(2, resStat);
-            insert.setString(3, pref);
-            insert.executeUpdate();
-
 
         }
-        catch (SQLException e){
+        catch (Exception e){
             //Throw exception if connection failed
             e.printStackTrace();
         }
