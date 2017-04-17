@@ -133,6 +133,19 @@ public class SQLUserPreferences {
     public boolean isRestricted(String pref)
     {
         //get restriction
-        return true;
+        boolean resValue = false;
+
+        try {
+            String query = "SELECT * FROM `preferences` WHERE user_ID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, pref);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("prefString");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return resValue;
     }
 }
