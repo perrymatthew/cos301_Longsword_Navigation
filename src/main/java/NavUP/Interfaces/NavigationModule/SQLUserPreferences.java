@@ -76,17 +76,18 @@ public class SQLUserPreferences {
         //Try Catch block for error handling
         try{
             boolean resStat = isRestricted(pref);
-            String query = "SELECT * FROM `preferences` WHERE userID = user_ID";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            //Removing the route from the DB
+            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            PreparedStatement preparedsmt = connection.prepareStatement(query);
+            preparedsmt.setString(1, pref);
+            preparedsmt.setString(2, user_ID);
+            preparedsmt.executeUpdate();
 
-            String aquery = "INSERT INTO `preferences` (userID, restrictions, preferences) VALUE (?, ?, ?)";
-            PreparedStatement insert = connection.prepareStatement(aquery);
-            insert.setString(1, user_ID);
-            insert.setBoolean(2, resStat);
-            insert.setString(3, pref);
-            insert.executeUpdate();
+
+//            PreparedStatement insert = connection.prepareStatement(aquery);
+//            insert.setString(1, user_ID);
+//            insert.setBoolean(2, resStat);
+//            insert.setString(3, pref);
+//            insert.executeUpdate();
 
         }
         catch (Exception e){
