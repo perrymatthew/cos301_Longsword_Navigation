@@ -62,3 +62,10 @@ public class SQLUserPreferences {
         }
         catch (Exception e){
             //Throw exception if connection failed
+            e.printStackTrace();
+        }
+    }
+
+    //Update preference function to update the preference of a user to the SQL DB
+    public void updatePreference(String pref) throws SQLException {
+        try {
