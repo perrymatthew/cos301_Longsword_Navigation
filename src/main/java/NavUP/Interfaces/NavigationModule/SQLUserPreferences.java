@@ -14,3 +14,11 @@ public class SQLUserPreferences {
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "root";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
+    Connection connection;
+
+    //Default constructor
+    public SQLUserPreferences()
+    {
+        //Try Catch block for error handling
+        try {
+            //Establish connection to teh DB
