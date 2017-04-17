@@ -153,6 +153,16 @@ public class SQLRouteCache {
             select.setString(2, end);
             ResultSet rs = select.executeQuery(query);
             cache = rs.getString("routeString");
+            int id = rs.getInt("idrouteCache");
+            if (!cache.equals(""))
+            {
+                query = "UPDATE 'routecache' \n" +
+                        "  SET popularity = routecache.popularity + 1 \n" +
+                        "  WHERE id = ?";
+                PreparedStatement update = connection.prepareStatement(query);
+                update.setInt(1, id);
+                update.executeUpdate();
+            }
         }
         catch (SQLException e){
             e.printStackTrace();
