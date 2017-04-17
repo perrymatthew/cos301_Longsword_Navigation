@@ -8,3 +8,21 @@ CREATE TABLE `cos301`.`routecache` (
   UNIQUE INDEX `idrouteCache_UNIQUE` (`idrouteCache` ASC))
 COMMENT = 'This is the table used by Navigation to manage the caching of popular routes';
 
+
+
+CREATE TABLE `cos301`.`userpins` (
+
+  `pinID` INT NOT NULL,
+
+  `userID` VARCHAR(45) NOT NULL,
+
+  `lat` INT NOT NULL,
+
+  `lon` INT NOT NULL,
+
+  `pinName` VARCHAR(45) NOT NULL,
+
+  PRIMARY KEY (`pinID`))
+
+COMMENT = 'this table will store the details for a users pins';
+
