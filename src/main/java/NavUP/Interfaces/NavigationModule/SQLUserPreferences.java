@@ -46,3 +46,11 @@ public class SQLUserPreferences {
             JSONObject json = new JSONObject(user);
 
             String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            Boolean userRestrictions = json.getBoolean("restrictions");
+//            Integer userRestrictions = boolReceived.compareTo(true);
+            String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, userPref);
+            insert.setBoolean(3, userRestrictions);
