@@ -68,6 +68,25 @@ public class SQLUserPreferences {
 
     //Update preference function to update the preference of a user to the SQL DB
     public void updatePreference(String pref) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+
+        //Try Catch block for error handling
+        try{
+            boolean resStat = isRestricted(pref);
+            String query = "SELECT * FROM `preferences` WHERE userID = user_ID";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            //Removing the route from the DB
+
+            String aquery = "INSERT INTO `preferences` (userID, restrictions, preferences) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(aquery);
+            insert.setString(1, user_ID);
+            insert.setBoolean(2, resStat);
+            insert.setString(3, pref);
+            insert.executeUpdate();
 
         }
         catch (Exception e){
