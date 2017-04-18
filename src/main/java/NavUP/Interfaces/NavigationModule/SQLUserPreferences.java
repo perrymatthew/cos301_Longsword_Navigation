@@ -120,24 +120,23 @@ public class SQLUserPreferences {
     }
 
     /**
-     * @param pref
+     * This method will return the preferences for a user.
+     * @param userID This is the Unique ID for the user.
      * @return A string representing the user's preferences.
-     * @throws SQLException
      */
-    public String getPreference(String userID) throws SQLException {
-        String cache = "";
+    public String getPreference(String userID) {
+        String pref = "";
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            String query = "SELECT * FROM `preferences` WHERE userID=userID";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, pref);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("prefString");
+            pref = rs.getString("preferences");
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return cache;
+        return pref;
     }
 
     /**
@@ -146,16 +145,16 @@ public class SQLUserPreferences {
      * @return A string representing the user's preferences.
      */
     public String getRestrictions(String userID) {
-        String cache = "";
+        String restrictions = "";
         try {
             String query = "SELECT * FROM preferences WHERE userID=userID";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("restrictions");
+            restrictions = rs.getString("restrictions");
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return cache;
+        return restrictions;
     }
 }
