@@ -115,6 +115,5 @@ public class Main {
                         +
                 "}";
         Navigation navModule = new Navigation();
-
     }
 }

@@ -144,7 +144,7 @@ public class SQLRouteCache {
      * this method is called and will decide which route to then remove. It then calls removeRoute() for the route that
      * has been decided to be removed.
      */
-    private void manageRoutes()
+    public void manageRoutes()
     {
         String queryStr = "SELECT * FROM 'routecache';";
         try {
@@ -204,7 +204,7 @@ public class SQLRouteCache {
      * Remove route function to remove the route to the SQL DB.
      * @param routeID This int is the unique ID that is the Primary key for a route.
      */
-    private void removeRoute(int routeID)
+    public void removeRoute(int routeID)
     {
         try {
             String query;
