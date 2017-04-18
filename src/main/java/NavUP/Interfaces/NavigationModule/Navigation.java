@@ -43,6 +43,8 @@ public class Navigation implements NavigationInterface {
         String cache = "";
         String fromGIS = "";
         String route = "";
+        String st = "";
+        String en = "";
         boolean checkRoute = false;
 
         try {
@@ -54,10 +56,13 @@ public class Navigation implements NavigationInterface {
 
             userPreferences.addUser(jObject.getString("userID"), jRestrictions.getBoolean("isDisabled"), jPreferences.getDouble("maximumRouteLength"));
 
-            checkRoute = routeCache.isRoute(jSource.getString("source"), jDestination.getString("destination"));
+            st = Double.toString(jSource.getDouble("lat")) + "_" + Double.toString(jSource.getDouble("long"));
+            en = Double.toString(jDestination.getDouble("lat")) + "_" + Double.toString(jDestination.getDouble("long"));
+
+            checkRoute = routeCache.isRoute(st, en);
 
             if (checkRoute) {
-                cache = routeCache.getCachedRoute(jSource.getString("source"), jDestination.getString("destination"));
+                cache = routeCache.getCachedRoute(jObject.getString("source"), jObject.getString("destination"));
                 return cache;
             }
             else {

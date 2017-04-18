@@ -73,13 +73,13 @@ public class Main {
                         + " \"userID\": \"user01\","
                         + " \"source\":"
                         + " {"
-                        + "     \"lat\": \"10\","
-                        + "     \"long\": \"20\""
+                        + "     \"lat\": \"1\","
+                        + "     \"long\": \"2\""
                         + " },"
                         + " \"destination\":"
                         + " {"
-                        + "     \"lat\": \"30\","
-                        + "     \"long\": \"40\""
+                        + "     \"lat\": \"5\","
+                        + "     \"long\": \"6\""
                         + " },"
                         + " \"restrictions\":"
                         + " {"
@@ -97,8 +97,8 @@ public class Main {
                         + " \"userID\": \"user01\","
                         + " \"pin\":"
                         + " {"
-                        + "     \"lat\": \"10\","
-                        + "     \"long\": \"20\","
+                        + "     \"lat\": \"1\","
+                        + "     \"long\": \"2\","
                         + "     \"customName\": \"DatPoint\""
                         + " }"
                         +
@@ -108,8 +108,8 @@ public class Main {
                         + " \"userID\": \"user02\","
                         + " \"pin\":"
                         + " {"
-                        + "     \"lat\": \"10\","
-                        + "     \"long\": \"20\","
+                        + "     \"lat\": \"5\","
+                        + "     \"long\": \"6\","
                         + "     \"customName\": \"DatPoint\""
                         + " }"
                         +
@@ -117,5 +117,8 @@ public class Main {
         Navigation navModule = new Navigation();
 
         //navModule.dropPin(pin1);
+        //navModule.removePin(pin1);
+        //System.out.println(navModule.getUserPins(pin1));
+        System.out.println(navModule.getRoute(pointLocations));
     }
 }

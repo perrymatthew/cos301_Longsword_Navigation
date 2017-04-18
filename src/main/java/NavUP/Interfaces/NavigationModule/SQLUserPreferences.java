@@ -1,28 +1,19 @@
 /**
- * @author Neo , Nathan
- * @version 1
- *
- *
+ * Class Overview:
+ * The SQLUsersPreferences class stores all of a users preferences and restrictions.
+ * These restrictions are used in route choices before they are sent back to access
  */
 
 /**
- * Package for Navigation Module
- *
+ * @author Neo Thokoa, Nathan Ngobale, Azhar Patel
+ * @version 1
  */
+
 package NavUP.Interfaces.NavigationModule;
 
-/**
- * Import libraries for SQL interaction and necessary data structures
- *
- */
 import org.json.JSONObject;
-
 import java.sql.*;
 
-/**
- * Class to manage SQL DB for user preferences and favourite routes
- *
- */
 public class SQLUserPreferences {
     /**
      * Variables to connect to the DB
@@ -52,11 +43,9 @@ public class SQLUserPreferences {
     /**
      * addUser function adds new user to SQL DB
      * @param userID JSON string of new user details
-     *
      */
     public void addUser(String userID, boolean userRestriction, double userPreference) throws SQLException {
         try {
-
             String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
             insert.setString(1, userID);
@@ -72,9 +61,8 @@ public class SQLUserPreferences {
     /**
      * updatePreference function updates preferences attribute of user in SQL DB
      * @param pref JSON string of the user details that are to be updated
-     *
      */
-    public void updatePreference(String pref) throws SQLException {
+    public void updatePreference(String userID, double userPreference) throws SQLException {
         try {
             JSONObject json = new JSONObject(pref);
             String userIdVar = json.getString("userID");
@@ -90,6 +78,25 @@ public class SQLUserPreferences {
         }
     }
 
+    /**
+     * updatePreference function updates preferences attribute of user in SQL DB
+     * @param pref JSON string of the user details that are to be updated
+     */
+    public void updateRestrictions(String userID, boolean userRestriction) throws SQLException {
+        try {
+            JSONObject json = new JSONObject(pref);
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setDouble(1, userPref);
+            insert.setString(2, userIdVar);
+            insert.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Get user function to get the user from the SQL DB.
@@ -97,7 +104,7 @@ public class SQLUserPreferences {
      * @return This is a string representing the user .
      * @throws SQLException
      */
-    public String getUser(String user) throws SQLException {//convert to JSON?
+    public String getUser(String userID) throws SQLException {
         String cache = "";
         try {
             String query = "SELECT * FROM `preferences` WHERE userID=?";
@@ -113,12 +120,11 @@ public class SQLUserPreferences {
     }
 
     /**
-     *
      * @param pref
      * @return A string representing the user's preferences.
      * @throws SQLException
      */
-    public String getPreference(String pref) throws SQLException {//convert to JSON?
+    public String getPreference(String userID) throws SQLException {
         String cache = "";
 
         try {
@@ -135,26 +141,23 @@ public class SQLUserPreferences {
     }
 
     /**
-     *
      * @param pref
-     * @return A true or false for whether or not has a restricted access preference.
+     * @return A string representing the user's preferences.
+     * @throws SQLException
      */
-    public boolean isRestricted(String pref)
-    {
-        //get restriction
-        boolean resValue = false;
+    public String getRestrictions(String userID) throws SQLException {
+        String cache = "";
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            String query = "SELECT * FROM `preferences` WHERE preferences=?";
             PreparedStatement select = connection.prepareStatement(query);
-            //select.setString(1, user_ID);
+            select.setString(1, pref);
             ResultSet rs = select.executeQuery(query);
-            resValue = rs.getBoolean("preferences");
+            cache = rs.getString("prefString");
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-
-        return resValue;
+        return cache;
     }
 }

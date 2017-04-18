@@ -1,7 +1,12 @@
 /**
+ * Class Overview:
+ * The SQLUserPins class is where a users pins will be stored in an SQL database.
+ * These pins can be returned to access to be displayed as custom locations
+ */
+
+/**
  * @author Duart Breedt
  * @version 1
- *
  */
 
 package NavUP.Interfaces.NavigationModule;
@@ -10,9 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.sql.*;
 
-/**
- * Class to manage user pins in the SQL database
- */
 public class SQLUserPins {
 
     /**
@@ -81,13 +83,13 @@ public class SQLUserPins {
             Double lonVar = pinVar.getDouble("long");
             String pinNameVar = pinVar.getString("customName");
 
-            String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND pinName=?;";
-            PreparedStatement insert = connection.prepareStatement(query);
-            insert.setString(1, userIdVar);
-            insert.setDouble(2, latVar);
-            insert.setDouble(3, lonVar);
-            insert.setString(4, pinNameVar);
-            insert.executeUpdate();
+            String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND pinName=?";
+            PreparedStatement delete = connection.prepareStatement(query);
+            delete.setString(1, userIdVar);
+            delete.setDouble(2, latVar);
+            delete.setDouble(3, lonVar);
+            delete.setString(4, pinNameVar);
+            delete.executeUpdate();
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -102,10 +104,8 @@ public class SQLUserPins {
      */
     public String getUserPins(String userId) {
         try {
-
-            String query = "SELECT * FROM `userpins` WHERE userID=?";
+            String query = "SELECT * FROM `userpins` WHERE userID=userId";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, userId);
             ResultSet rs = select.executeQuery(query);
 
             JSONArray pinsArray = new JSONArray();
@@ -116,7 +116,7 @@ public class SQLUserPins {
 
                 pinObj.put("lat", rs.getDouble("lat"));
                 pinObj.put("lon", rs.getDouble("lon"));
-                pinObj.put("customName", rs.getString("customName"));
+                pinObj.put("pinName", rs.getString("pinName"));
 
                 pinsArray.put(pinObj);
             }
@@ -130,5 +130,4 @@ public class SQLUserPins {
         }
         return "";
     }
-
 }
