@@ -70,33 +70,25 @@ public class SQLUserPreferences {
 
     //Update preference function to update the preference of a user to the SQL DB
     public void updatePreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
+        try {
+            //Adding the route to the DB
 
-        //Try Catch block for error handling
-        try{
-            boolean resStat = isRestricted(pref);
-            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
-            PreparedStatement preparedsmt = connection.prepareStatement(query);
-            preparedsmt.setString(1, pref);
-            preparedsmt.setString(2, user_ID);
-            preparedsmt.executeUpdate();
+            JSONObject json = new JSONObject(pref);
 
-
-//            PreparedStatement insert = connection.prepareStatement(aquery);
-//            insert.setString(1, user_ID);
-//            insert.setBoolean(2, resStat);
-//            insert.setString(3, pref);
-//            insert.executeUpdate();
-
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            String query = "UPDATE `preferences` SET preferences = ? WHERE userID = ?";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setDouble(1, userPref);
+            insert.setString(2, userIdVar);
+            insert.executeUpdate();
         }
         catch (Exception e){
             //Throw exception if connection failed
             e.printStackTrace();
         }
     }
+
 
     //Get user function to get the user from the SQL DB
     public String getUser(String user) throws SQLException {//convert to JSON?
@@ -117,7 +109,7 @@ public class SQLUserPreferences {
 
     //Get preference function to get the user's preference from the SQL DB
     public String getPreference(String pref) throws SQLException {//convert to JSON?
-         String cache = "";
+        String cache = "";
 
         try {
             String query = "SELECT * FROM `preferences` WHERE preferences=?";
