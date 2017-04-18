@@ -143,17 +143,14 @@ public class SQLUserPreferences {
     /**
      * @param pref
      * @return A string representing the user's preferences.
-     * @throws SQLException
      */
-    public String getRestrictions(String userID) throws SQLException {
+    public String getRestrictions(String userID) {
         String cache = "";
-
         try {
-            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            String query = "SELECT * FROM preferences WHERE userID=userID";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, pref);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("prefString");
+            cache = rs.getString("restrictions");
         }
         catch (SQLException e){
             e.printStackTrace();
