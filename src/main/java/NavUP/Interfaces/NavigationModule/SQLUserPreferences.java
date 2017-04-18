@@ -96,3 +96,57 @@ public class SQLUserPreferences {
             e.printStackTrace();
         }
     }
+
+
+    //Get user function to get the user from the SQL DB
+    public String getUser(String user) throws SQLException {//convert to JSON?
+        String cache = "";
+        try {
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, user);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("userString");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return cache;
+    }
+
+    //Get preference function to get the user's preference from the SQL DB
+    public String getPreference(String pref) throws SQLException {//convert to JSON?
+        String cache = "";
+
+        try {
+            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, pref);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("prefString");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return cache;
+    }
+
+    public boolean isRestricted(String pref)
+    {
+        //get restriction
+        boolean resValue = false;
+
+        try {
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, user_ID);
+            ResultSet rs = select.executeQuery(query);
+            resValue = rs.getBoolean("preferences");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return resValue;
+    }
+}
