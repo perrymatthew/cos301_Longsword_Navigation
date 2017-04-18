@@ -128,7 +128,7 @@ public class SQLUserPreferences {
         String pref = "";
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE userID=" + userID + ";";
+            String query = "SELECT * FROM `preferences` WHERE userID=userID";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
             pref = rs.getString("preferences");
@@ -147,7 +147,7 @@ public class SQLUserPreferences {
     public String getRestrictions(String userID) {
         String restrictions = "";
         try {
-            String query = "SELECT * FROM preferences WHERE userID=" + userID + ";";
+            String query = "SELECT * FROM preferences WHERE userID=userID";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
             restrictions = rs.getString("restrictions");
