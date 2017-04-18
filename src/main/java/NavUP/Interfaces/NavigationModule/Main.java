@@ -115,5 +115,7 @@ public class Main {
                         +
                 "}";
         Navigation navModule = new Navigation();
+
+        //navModule.dropPin(pin1);
     }
 }

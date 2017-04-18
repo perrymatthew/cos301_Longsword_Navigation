@@ -1,11 +1,9 @@
-
 /**
  * @author Neo , Nathan
  * @version 1
  *
  *
  */
-
 
 /**
  * Package for Navigation Module
@@ -29,9 +27,9 @@ public class SQLUserPreferences {
     /**
      * Variables to connect to the DB
      */
-    private final static String DB_URL = "";
-    private final static String USERNAME = "admin";
-    private final static String PASSWORD = "root";
+    private final static String DB_URL = "jdbc:mysql://localhost:3306/Navigation";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     Connection connection;
 
@@ -53,22 +51,17 @@ public class SQLUserPreferences {
     //Add user function to add the user to the SQL DB
     /**
      * addUser function adds new user to SQL DB
-     * @param user JSON string of new user details
+     * @param userID JSON string of new user details
      *
      */
-    public void addUser(String user) throws SQLException {
+    public void addUser(String userID, boolean userRestriction, double userPreference) throws SQLException {
         try {
 
-            JSONObject json = new JSONObject(user);
-
-            String userIdVar = json.getString("userID");
-            Double userPref = json.getDouble("preferences");
-            Boolean userRestrictions = json.getBoolean("restrictions");
             String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
-            insert.setString(1, userIdVar);
-            insert.setDouble(2, userPref);
-            insert.setBoolean(3, userRestrictions);
+            insert.setString(1, userID);
+            insert.setDouble(2, userPreference);
+            insert.setBoolean(3, userRestriction);
             insert.executeUpdate();
         }
         catch (Exception e){
@@ -142,7 +135,7 @@ public class SQLUserPreferences {
     }
 
     /**
-     * 
+     *
      * @param pref
      * @return A true or false for whether or not has a restricted access preference.
      */

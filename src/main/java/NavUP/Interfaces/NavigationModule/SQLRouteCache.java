@@ -28,9 +28,9 @@ public class SQLRouteCache {
     /**
      * Variables to connect to the DB
      */
-    private final static String DB_URL = "jdbc:mysql://localhost/";
-    private final static String USERNAME = "admin";
-    private final static String PASSWORD = "root";
+    private final static String DB_URL = "jdbc:mysql://localhost:3306/Navigation";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     private Connection connection;
 

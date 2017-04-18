@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
+
 public class Navigation implements NavigationInterface {
     private SQLRouteCache routeCache;
     private SQLUserPreferences userPreferences;
@@ -50,7 +52,7 @@ public class Navigation implements NavigationInterface {
             JSONObject jRestrictions = jObject.getJSONObject("restrictions");
             JSONObject jPreferences = jObject.getJSONObject("preferences");
 
-            //userPreferences.addUser(pointLocations);
+            userPreferences.addUser(jObject.getString("userID"), jRestrictions.getBoolean("isDisabled"), jPreferences.getDouble("maximumRouteLength"));
 
             checkRoute = routeCache.isRoute(jSource.getString("source"), jDestination.getString("destination"));
 
@@ -60,6 +62,7 @@ public class Navigation implements NavigationInterface {
             }
             else {
                 fromGIS = GIS.getRoutes(jSource.getDouble("lat"), jSource.getDouble("long"), jDestination.getDouble("lat"), jDestination.getDouble("long"));
+
                 jObject = new JSONObject(fromGIS);
                 JSONArray jRoutes = jObject.getJSONArray("routes");
 
@@ -87,9 +90,9 @@ public class Navigation implements NavigationInterface {
         catch (JSONException e) {
             System.out.println("Can not parse string");
         }
-        //catch (SQLException e) {
-        //    System.out.println("Error in DB");
-        //}
+        catch (SQLException e) {
+            System.out.println("Error in DB");
+        }
         return "";
     }
 

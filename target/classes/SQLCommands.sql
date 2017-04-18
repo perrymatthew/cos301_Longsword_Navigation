@@ -1,5 +1,4 @@
-
-CREATE TABLE `cos301`.`routecache` (
+CREATE TABLE `Navigation`.`routecache` (
   `idrouteCache` INT NOT NULL AUTO_INCREMENT COMMENT 'private key for table',
   `routeString` VARCHAR(2048) NOT NULL COMMENT 'the raw string of the route',
   `startPoint` VARCHAR(45) NOT NULL COMMENT 'string for the route\'s starting node',
@@ -9,9 +8,7 @@ CREATE TABLE `cos301`.`routecache` (
   UNIQUE INDEX `idrouteCache_UNIQUE` (`idrouteCache` ASC))
 COMMENT = 'This is the table used by Navigation to manage the caching of popular routes';
 
-
-
-CREATE TABLE `cos301`.`userpins` (
+CREATE TABLE `Navigation`.`userpins` (
 
   `pinID` INT NOT NULL,
 
@@ -27,7 +24,7 @@ CREATE TABLE `cos301`.`userpins` (
 
 COMMENT = 'this table will store the details for a users pins';
 
-CREATE TABLE `cos301`.`preferences` (
+CREATE TABLE `Navigation`.`preferences` (
   `userID` VARCHAR(45) NOT NULL COMMENT 'unique id for the user',
 
   `preferences` DOUBLE NOT NULL COMMENT 'maximum length a user wants path to be',

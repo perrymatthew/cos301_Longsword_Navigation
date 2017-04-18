@@ -18,9 +18,9 @@ public class SQLUserPins {
     /**
      * Variables to connect to the DB
      */
-    private final static String DB_URL = "jdbc:mysql://localhost/";
-    private final static String USERNAME = "admin";
-    private final static String PASSWORD = "root";
+    private final static String DB_URL = "jdbc:mysql://localhost:3306/Navigation";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     private Connection connection;
 
@@ -53,7 +53,7 @@ public class SQLUserPins {
             Double lonVar = pinVar.getDouble("long");
             String pinNameVar = pinVar.getString("customName");
 
-            String query = "INSERT INTO `userpins`(userID, lat, lon, customName) VALUE (?, ?, ?, ?)";
+            String query = "INSERT INTO `userpins`(userID, lat, lon, pinName) VALUE (?, ?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
             insert.setString(1, userIdVar);
             insert.setDouble(2, latVar);
@@ -81,7 +81,7 @@ public class SQLUserPins {
             Double lonVar = pinVar.getDouble("long");
             String pinNameVar = pinVar.getString("customName");
 
-            String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND customName=?;";
+            String query = "DELETE FROM `userpins` WHERE userID=? AND lat=? AND lon=? AND pinName=?;";
             PreparedStatement insert = connection.prepareStatement(query);
             insert.setString(1, userIdVar);
             insert.setDouble(2, latVar);
