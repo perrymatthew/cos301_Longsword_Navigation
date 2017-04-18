@@ -116,14 +116,14 @@ public class SQLUserPreferences {
 
     /**
      * This method will return the preferences for a user.
-     * @param userID This is the Unique ID for the user.
+     * @param userId This is the Unique ID for the user.
      * @return A string representing the user's preferences.
      */
-    public String getPreference(String userID) {
+    public String getPreference(String userId) {
         String pref = "";
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE userID=userID";
+            String query = "SELECT * FROM `preferences` WHERE userID=userId";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
             pref = rs.getString("preferences");
@@ -136,13 +136,13 @@ public class SQLUserPreferences {
 
     /**
      * This method will return the restrictions for a User.
-     * @param userID This is the Unique ID for the user.
+     * @param userId This is the Unique ID for the user.
      * @return A string representing the user's preferences.
      */
-    public String getRestrictions(String userID) {
+    public String getRestrictions(String userId) {
         String restrictions = "";
         try {
-            String query = "SELECT * FROM preferences WHERE userID=userID";
+            String query = "SELECT * FROM preferences WHERE userID=userId";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
             restrictions = rs.getString("restrictions");
