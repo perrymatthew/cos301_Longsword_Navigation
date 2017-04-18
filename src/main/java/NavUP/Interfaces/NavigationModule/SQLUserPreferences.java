@@ -67,8 +67,10 @@ public class SQLUserPreferences {
      * @throws SQLException Thrown exception in case no update can be made
      */
     public void updatePreference(String userId, double userPreference) throws SQLException {
-        try {
-            String query = "UPDATE preferences SET preferences=userID WHERE userID =userID";
+        try
+        {
+          //use userId given from param
+            String query = "UPDATE preferences SET preferences=userPreference WHERE userID =userId";
             PreparedStatement insert = connection.prepareStatement(query);
             insert.executeUpdate();
         }
