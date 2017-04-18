@@ -79,9 +79,9 @@ public class SQLRouteCache {
             JSONObject json = new JSONObject(route);
             JSONArray routeObj = json.getJSONArray("waypoints");
             int length = routeObj.length();
-            start = routeObj.getJSONObject(0).getDouble("lat") + "," +
+            start = routeObj.getJSONObject(0).getDouble("lat") + "_" +
                     routeObj.getJSONObject(0).getDouble("long");
-            end = routeObj.getJSONObject(length - 1).getDouble("lat") + "," +
+            end = routeObj.getJSONObject(length - 1).getDouble("lat") + "_" +
                     routeObj.getJSONObject(length - 1).getDouble("long");
 
             try {
@@ -100,6 +100,7 @@ public class SQLRouteCache {
         } catch (JSONException e) {
             System.out.println("Add route JSON failure: " + e.toString());
         }
+
         this.manageRoutes();
     }
 
@@ -146,7 +147,7 @@ public class SQLRouteCache {
      */
     private void manageRoutes()
     {
-        String queryStr = "SELECT * FROM 'routecache';";
+        String queryStr = "SELECT * FROM routecache;";
         try {
             PreparedStatement query = connection.prepareStatement(queryStr);
             ResultSet rs = query.executeQuery();
@@ -177,14 +178,14 @@ public class SQLRouteCache {
             JSONObject json = new JSONObject(route);
             JSONArray routeObj = json.getJSONArray("waypoints");
             int length = routeObj.length();
-            start = routeObj.getJSONObject(0).getDouble("lat") + "," +
+            start = routeObj.getJSONObject(0).getDouble("lat") + "_" +
                     routeObj.getJSONObject(0).getDouble("long");
-            end = routeObj.getJSONObject(length - 1).getDouble("lat") + "," +
+            end = routeObj.getJSONObject(length - 1).getDouble("lat") + "_" +
                     routeObj.getJSONObject(length - 1).getDouble("long");
 
             try {
                 String query;
-                query = "DELETE FROM `routecache` WHERE startPoint=? AND endPoint=?;";
+                query = "DELETE FROM routecache WHERE startPoint=? AND endPoint=?;";
                 PreparedStatement remove = connection.prepareStatement(query);
                 remove.setString(1, start);
                 remove.setString(2, end);
@@ -208,7 +209,7 @@ public class SQLRouteCache {
     {
         try {
             String query;
-            query = "DELETE FROM `routecache` WHERE idrouteCache = ?;";
+            query = "DELETE FROM routecache WHERE idrouteCache = ?;";
             PreparedStatement remove = connection.prepareStatement(query);
             remove.setInt(1, routeID);
             remove.executeUpdate();
