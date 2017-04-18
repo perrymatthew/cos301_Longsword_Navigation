@@ -75,3 +75,24 @@ public class SQLUserPreferences {
             e.printStackTrace();
         }
     }
+
+    /**
+     * updatePreference function updates preferences attribute of user in SQL DB
+     * @param pref JSON string of the user details that are to be updated
+     *
+     */
+    public void updatePreference(String pref) throws SQLException {
+        try {
+            JSONObject json = new JSONObject(pref);
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setDouble(1, userPref);
+            insert.setString(2, userIdVar);
+            insert.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
