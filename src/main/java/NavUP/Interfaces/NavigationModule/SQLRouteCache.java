@@ -152,7 +152,7 @@ public class SQLRouteCache {
             ResultSet rs = query.executeQuery();
             if (rs.getRow() > 20)
             {
-                String sort = "SELECT TOP 12 idrouteCache, popularity FROM routecache ORDER BY popularity;";
+                String sort = "SELECT idrouteCache, popularity FROM routecache ORDER BY popularity LIMIT 12;";
                 query = connection.prepareStatement(sort);
                 rs = query.executeQuery();
                 rs.last();
