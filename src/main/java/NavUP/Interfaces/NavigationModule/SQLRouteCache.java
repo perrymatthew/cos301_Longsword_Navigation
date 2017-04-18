@@ -28,7 +28,7 @@ public class SQLRouteCache {
     /**
      * Variables to connect to the DB
      */
-    private final static String DB_URL = "jdbc:mysql://localhost/";
+    private final static String DB_URL = "jdbc:mysql://localhost/cos301";
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "root";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
@@ -43,7 +43,7 @@ public class SQLRouteCache {
         try {
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             Class.forName(myDriver);
-            System.out.println("Connected to Database");
+            //System.out.println("Connected to Database");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -51,10 +51,10 @@ public class SQLRouteCache {
     }
     
     /**
-     * isRoute function to check if route exists in the SQL DB
-     * @param startPoint The start waypoint
-     * @param endPoint The end waypoint
-     * @return true if route already exists, false otherwise
+     * isRoute function to check if route exists in the SQL DB.
+     * @param startPoint The start waypoint.
+     * @param endPoint The end waypoint.
+     * @return true if route already exists, false otherwise.
      */
     private boolean isRoute(String startPoint,String endPoint) {
         String check = getCachedRoute(startPoint, endPoint);
@@ -67,7 +67,7 @@ public class SQLRouteCache {
     }
     
     /**
-     * Add route function to add the route to the SQL DB
+     * Add route function to add the route to the SQL DB.
      * @param route this is a JSON String that serves as the route.
      */
     public void addRoute(String route) {
@@ -77,16 +77,16 @@ public class SQLRouteCache {
 
         try {
             JSONObject json = new JSONObject(route);
-            JSONArray routeObj = json.getJSONArray("route");
-            int length = json.getInt("length");
+            JSONArray routeObj = json.getJSONArray("waypoints");
+            int length = routeObj.length();
             start = routeObj.getJSONObject(0).getDouble("lat") + "," +
                     routeObj.getJSONObject(0).getDouble("long");
-            end = routeObj.getJSONObject(length).getDouble("lat") + "," +
-                    routeObj.getJSONObject(length).getDouble("long");
+            end = routeObj.getJSONObject(length - 1).getDouble("lat") + "," +
+                    routeObj.getJSONObject(length - 1).getDouble("long");
 
             try {
                 String query;
-                query = "INSERT INTO `routecache`(routeString, startPoint, endPoint, popularity) VALUE (?, ?, ?, ?)";
+                query = "INSERT INTO routecache(routeString, startPoint, endPoint, popularity) VALUE (?, ?, ?, ?)";
                 PreparedStatement insert = connection.prepareStatement(query);
                 insert.setString(1, route);
                 insert.setString(2, start);
@@ -169,18 +169,18 @@ public class SQLRouteCache {
      * Remove route function to remove the route to the SQL DB.
      * @param route this is a JSON String that serves as the route.
      */
-    private void removeRoute(String route) {
+    public void removeRoute(String route) {
         String start;
         String end;
 
         try {
             JSONObject json = new JSONObject(route);
-            JSONArray routeObj = json.getJSONArray("route");
-            int length = json.getInt("length");
+            JSONArray routeObj = json.getJSONArray("waypoints");
+            int length = routeObj.length();
             start = routeObj.getJSONObject(0).getDouble("lat") + "," +
                     routeObj.getJSONObject(0).getDouble("long");
-            end = routeObj.getJSONObject(length).getDouble("lat") + "," +
-                    routeObj.getJSONObject(length).getDouble("long");
+            end = routeObj.getJSONObject(length - 1).getDouble("lat") + "," +
+                    routeObj.getJSONObject(length - 1).getDouble("long");
 
             try {
                 String query;
@@ -204,7 +204,7 @@ public class SQLRouteCache {
      * Remove route function to remove the route to the SQL DB.
      * @param routeID This int is the unique ID that is the Primary key for a route.
      */
-    private void removeRoute(int routeID)
+    public void removeRoute(int routeID)
     {
         try {
             String query;
