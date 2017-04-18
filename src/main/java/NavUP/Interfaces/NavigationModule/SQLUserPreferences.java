@@ -1,119 +1,168 @@
-//Package for Navigation Module
+
+/**
+ * @author Neo , Nathan
+ * @version 1
+ *
+ *
+ */
+
+
+/**
+ * Package for Navigation Module
+ *
+ */
 package NavUP.Interfaces.NavigationModule;
 
-//Import libraries for SQL interaction
+/**
+ * Import libraries for SQL interaction and necessary data structures
+ *
+ */
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.*;
 
-//Class to manage SQL DB for user preferences and favourite routes
+/**
+ * Class to manage SQL DB for user preferences and favourite routes
+ *
+ */
 public class SQLUserPreferences {
-    //Variables to connect to the DB
+    /**
+     * Variables to connect to the DB
+     */
     private final static String DB_URL = "";
     private final static String USERNAME = "admin";
     private final static String PASSWORD = "root";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     Connection connection;
 
-    //Default constructor
+    /**
+     * Default constructor of SQLUserPreferences
+     */
     public SQLUserPreferences()
     {
-        //Try Catch block for error handling
         try {
-            //Establish connection to teh DB
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             Class.forName(myDriver);
             System.out.println("Connected to Database");
         }
         catch (Exception e) {
-            //Throw exception if connection failed
             e.printStackTrace();
         }
     }
 
     //Add user function to add the user to the SQL DB
+    /**
+     * addUser function adds new user to SQL DB
+     * @param user JSON string of new user details
+     *
+     */
     public void addUser(String user) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-
-        //Try Catch block for error handling
         try {
-            //Adding the route to the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+
+            JSONObject json = new JSONObject(user);
+
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            Boolean userRestrictions = json.getBoolean("restrictions");
+            String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, userPref);
+            insert.setBoolean(3, userRestrictions);
+            insert.executeUpdate();
         }
-        catch (SQLException e){
-            //Throw exception if connection failed
+        catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    //Update preference function to update the preference of a user to the SQL DB
+    /**
+     * updatePreference function updates preferences attribute of user in SQL DB
+     * @param pref JSON string of the user details that are to be updated
+     *
+     */
     public void updatePreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-
-        //Try Catch block for error handling
         try {
-            //Removing the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            JSONObject json = new JSONObject(pref);
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setDouble(1, userPref);
+            insert.setString(2, userIdVar);
+            insert.executeUpdate();
         }
-        catch (SQLException e){
-            //Throw exception if connection failed
+        catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    //Get user function to get the user from the SQL DB
-    public String getUser(String user) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return user in JSON format
-        String client = "";
 
-        //Try Catch block for error handling
+    /**
+     * Get user function to get the user from the SQL DB.
+     * @param user
+     * @return This is a string representing the user .
+     * @throws SQLException
+     */
+    public String getUser(String user) throws SQLException {//convert to JSON?
+        String cache = "";
         try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, user);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("userString");
         }
         catch (SQLException e){
-            //Throw exception if connection failed
             e.printStackTrace();
         }
-        //Return the JSON formatted route
-        return client;
+        return cache;
     }
 
-    //Get preference function to get the user's preference from the SQL DB
-    public String getPreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return preference in JSON format
-        String preference = "";
+    /**
+     *
+     * @param pref
+     * @return A string representing the user's preferences.
+     * @throws SQLException
+     */
+    public String getPreference(String pref) throws SQLException {//convert to JSON?
+        String cache = "";
 
-        //Try Catch block for error handling
         try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, pref);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("prefString");
         }
         catch (SQLException e){
-            //Throw exception if connection failed
             e.printStackTrace();
         }
-        //Return the JSON formatted route
-        return preference;
+        return cache;
+    }
+
+    /**
+     * 
+     * @param pref
+     * @return A true or false for whether or not has a restricted access preference.
+     */
+    public boolean isRestricted(String pref)
+    {
+        //get restriction
+        boolean resValue = false;
+
+        try {
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, user_ID);
+            ResultSet rs = select.executeQuery(query);
+            resValue = rs.getBoolean("preferences");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return resValue;
     }
 }
