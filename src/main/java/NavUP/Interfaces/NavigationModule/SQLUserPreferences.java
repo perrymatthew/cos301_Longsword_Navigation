@@ -39,16 +39,18 @@ public class SQLUserPreferences {
         }
     }
 
-    //Add user function to add the user to the SQL DB
     /**
-     * addUser function adds new user to SQL DB
-     * @param userID JSON string of new user details
+     * addUser function adds a user to the DB
+     * @param userId
+     * @param userRestriction
+     * @param userPreference
+     * @throws SQLException
      */
-    public void addUser(String userID, boolean userRestriction, double userPreference) throws SQLException {
+    public void addUser(String userId, boolean userRestriction, double userPreference) throws SQLException {
         try {
             String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
-            insert.setString(1, userID);
+            insert.setString(1, userId);
             insert.setDouble(2, userPreference);
             insert.setBoolean(3, userRestriction);
             insert.executeUpdate();
@@ -59,18 +61,15 @@ public class SQLUserPreferences {
     }
 
     /**
-     * updatePreference function updates preferences attribute of user in SQL DB
-     * @param pref JSON string of the user details that are to be updated
+     * updatePreference function to update the already existing user's preference
+     * @param userId The user's ID to update
+     * @param userPreference The preference associated to the user's ID
+     * @throws SQLException Thrown exception in case no update can be made
      */
-    public void updatePreference(String userID, double userPreference) throws SQLException {
+    public void updatePreference(String userId, double userPreference) throws SQLException {
         try {
-            JSONObject json = new JSONObject(pref);
-            String userIdVar = json.getString("userID");
-            Double userPref = json.getDouble("preferences");
-            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            String query = "UPDATE preferences SET preferences=userID WHERE userID =userID";
             PreparedStatement insert = connection.prepareStatement(query);
-            insert.setDouble(1, userPref);
-            insert.setString(2, userIdVar);
             insert.executeUpdate();
         }
         catch (Exception e){
@@ -79,18 +78,15 @@ public class SQLUserPreferences {
     }
 
     /**
-     * updatePreference function updates preferences attribute of user in SQL DB
-     * @param pref JSON string of the user details that are to be updated
+     * updateRestrictions function to update the already existing user's restriction
+     * @param userID The user's ID to update
+     * @param userRestriction The restriction associated to the user's ID
+     * @throws SQLException Thrown exception in case no update can be made
      */
     public void updateRestrictions(String userID, boolean userRestriction) throws SQLException {
         try {
-            JSONObject json = new JSONObject(pref);
-            String userIdVar = json.getString("userID");
-            Double userPref = json.getDouble("preferences");
-            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            String query = "UPDATE preferences SET restrictions = userRestriction WHERE userID = userID";
             PreparedStatement insert = connection.prepareStatement(query);
-            insert.setDouble(1, userPref);
-            insert.setString(2, userIdVar);
             insert.executeUpdate();
         }
         catch (Exception e){
@@ -99,24 +95,23 @@ public class SQLUserPreferences {
     }
 
     /**
-     * Get user function to get the user from the SQL DB.
-     * @param user
+     * getUser function to get the user from the SQL DB.
+     * @param userId The passed user ID to search from the DB
      * @return This is a string representing the user .
      * @throws SQLException
      */
-    public String getUser(String userID) throws SQLException {
-        String cache = "";
+    public String getUser(String userId) throws SQLException {
+        String user = "";
         try {
-            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            String query = "SELECT userID FROM `preferences` WHERE userID=userId";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, user);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("userString");
+            user = rs.getString("userID");
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return cache;
+        return user;
     }
 
     /**
