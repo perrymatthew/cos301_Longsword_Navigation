@@ -141,7 +141,8 @@ public class SQLUserPreferences {
     }
 
     /**
-     * @param pref
+     * This method will return the restrictions for a User.
+     * @param userID This is the Unique ID for the user.
      * @return A string representing the user's preferences.
      */
     public String getRestrictions(String userID) {
