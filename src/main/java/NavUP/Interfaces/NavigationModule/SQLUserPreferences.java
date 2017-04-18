@@ -39,6 +39,8 @@ public class SQLUserPreferences {
         //Variable for the user's preference
         String user_Pref = "";
 
+
+
         //Try Catch block for error handling
         try {
             //Adding the route to the DB
@@ -68,6 +70,26 @@ public class SQLUserPreferences {
 
     //Update preference function to update the preference of a user to the SQL DB
     public void updatePreference(String pref) throws SQLException {
+        //Variable for the user's ID
+        String user_ID = "";
+        //Variable for the user's preference
+        String user_Pref = "";
+
+        //Try Catch block for error handling
+        try{
+            boolean resStat = isRestricted(pref);
+            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            PreparedStatement preparedsmt = connection.prepareStatement(query);
+            preparedsmt.setString(1, pref);
+            preparedsmt.setString(2, user_ID);
+            preparedsmt.executeUpdate();
+
+
+//            PreparedStatement insert = connection.prepareStatement(aquery);
+//            insert.setString(1, user_ID);
+//            insert.setBoolean(2, resStat);
+//            insert.setString(3, pref);
+//            insert.executeUpdate();
 
         }
         catch (Exception e){
@@ -113,6 +135,22 @@ public class SQLUserPreferences {
     public boolean isRestricted(String pref)
     {
         //get restriction
-        return true;
+        boolean resValue = false;
+
+        try {
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, user_ID);
+            ResultSet rs = select.executeQuery(query);
+            resValue = rs.getBoolean("preferences");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return resValue;
     }
+
+    //private  currentUser;
+
 }
