@@ -38,3 +38,14 @@ public class SQLUserPreferences {
     /**
      * Default constructor of SQLUserPreferences
      */
+    public SQLUserPreferences()
+    {
+        try {
+            connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            Class.forName(myDriver);
+            System.out.println("Connected to Database");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
