@@ -1,10 +1,18 @@
-package NavUP.Interfaces;
+/**
+ * Class Overview:
+ * The Navigation Interface class which allows other modules to make use of the Navigation modules functionality
+ */
 
-//NavigationInterface which will be used by other modules and will be implemented in the Navigation class
+/**
+ * @author Integration Team
+ * @version 1
+ */
+package NavUP.Interfaces;
 public interface NavigationInterface {
     public String getRoute(String pointLocations);
     public void dropPin(String pin);
     public void removePin(String pin);
+    public String getUserPins (String userID);
 }
 
 //getRoute() sample input:
@@ -102,3 +110,23 @@ public interface NavigationInterface {
 //        long: double
 //    }
 //}
+
+//    public String getUserPins (String userID)
+//
+//    Json Format:
+//
+//    Input Paramater:
+//      {userID:String}
+//
+//      Output Return Value:
+//      {
+//        pins:
+//        [
+//          {
+//              lat: double,
+//              long: double,
+//              customName: String
+//          },
+//          ...
+//        ]
+//      }

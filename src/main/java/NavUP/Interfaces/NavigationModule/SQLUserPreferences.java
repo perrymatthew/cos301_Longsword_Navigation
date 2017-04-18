@@ -2,6 +2,8 @@
 package NavUP.Interfaces.NavigationModule;
 
 //Import libraries for SQL interaction
+import org.json.JSONObject;
+
 import java.sql.*;
 
 //Class to manage SQL DB for user preferences and favourite routes
@@ -36,14 +38,30 @@ public class SQLUserPreferences {
         //Variable for the user's preference
         String user_Pref = "";
 
+
+
         //Try Catch block for error handling
         try {
             //Adding the route to the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+
+            JSONObject json = new JSONObject(user);
+
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            Boolean userRestrictions = json.getBoolean("restrictions");
+//            Integer userRestrictions = boolReceived.compareTo(true);
+            String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, userPref);
+            insert.setBoolean(3, userRestrictions);
+            insert.executeUpdate();
+//            JSONArray pinsArray = new JSONArray();
+//            String query = "";
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(query);
         }
-        catch (SQLException e){
+        catch (Exception e){
             //Throw exception if connection failed
             e.printStackTrace();
         }
@@ -57,63 +75,81 @@ public class SQLUserPreferences {
         String user_Pref = "";
 
         //Try Catch block for error handling
-        try {
-            //Removing the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+        try{
+            boolean resStat = isRestricted(pref);
+            String query = "UPDATE preferences SET preferences = ? WHERE userID = ?";
+            PreparedStatement preparedsmt = connection.prepareStatement(query);
+            preparedsmt.setString(1, pref);
+            preparedsmt.setString(2, user_ID);
+            preparedsmt.executeUpdate();
+
+
+//            PreparedStatement insert = connection.prepareStatement(aquery);
+//            insert.setString(1, user_ID);
+//            insert.setBoolean(2, resStat);
+//            insert.setString(3, pref);
+//            insert.executeUpdate();
+
         }
-        catch (SQLException e){
+        catch (Exception e){
             //Throw exception if connection failed
             e.printStackTrace();
         }
     }
 
     //Get user function to get the user from the SQL DB
-    public String getUser(String user) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return user in JSON format
-        String client = "";
+    public String getUser(String user) throws SQLException {//convert to JSON?
+        String cache = "";
 
-        //Try Catch block for error handling
         try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, user);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("userString");
         }
         catch (SQLException e){
-            //Throw exception if connection failed
             e.printStackTrace();
         }
-        //Return the JSON formatted route
-        return client;
+        return cache;
     }
 
     //Get preference function to get the user's preference from the SQL DB
-    public String getPreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-        //Variable to return preference in JSON format
-        String preference = "";
+    public String getPreference(String pref) throws SQLException {//convert to JSON?
+         String cache = "";
 
-        //Try Catch block for error handling
         try {
-            //Retrieve the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            select.setString(1, pref);
+            ResultSet rs = select.executeQuery(query);
+            cache = rs.getString("prefString");
         }
         catch (SQLException e){
-            //Throw exception if connection failed
             e.printStackTrace();
         }
-        //Return the JSON formatted route
-        return preference;
+        return cache;
     }
+
+    public boolean isRestricted(String pref)
+    {
+        //get restriction
+        boolean resValue = false;
+
+        try {
+            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            PreparedStatement select = connection.prepareStatement(query);
+            //select.setString(1, userID);
+            ResultSet rs = select.executeQuery(query);
+            resValue = rs.getBoolean("preferences");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return resValue;
+    }
+
+    //private  currentUser;
+
 }
