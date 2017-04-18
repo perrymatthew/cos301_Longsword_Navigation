@@ -99,7 +99,12 @@ public class SQLUserPreferences {
     }
 
 
-    //Get user function to get the user from the SQL DB
+    /**
+     * Get user function to get the user from the SQL DB.
+     * @param user
+     * @return This is a string representing the user .
+     * @throws SQLException
+     */
     public String getUser(String user) throws SQLException {//convert to JSON?
         String cache = "";
         try {
@@ -115,7 +120,12 @@ public class SQLUserPreferences {
         return cache;
     }
 
-    //Get preference function to get the user's preference from the SQL DB
+    /**
+     *
+     * @param pref
+     * @return A string representing the user's preferences.
+     * @throws SQLException
+     */
     public String getPreference(String pref) throws SQLException {//convert to JSON?
         String cache = "";
 
@@ -132,6 +142,11 @@ public class SQLUserPreferences {
         return cache;
     }
 
+    /**
+     * 
+     * @param pref
+     * @return A true or false for whether or not has a restricted access preference.
+     */
     public boolean isRestricted(String pref)
     {
         //get restriction
