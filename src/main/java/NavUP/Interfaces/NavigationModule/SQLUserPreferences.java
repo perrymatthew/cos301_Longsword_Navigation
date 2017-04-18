@@ -49,3 +49,29 @@ public class SQLUserPreferences {
             e.printStackTrace();
         }
     }
+
+    //Add user function to add the user to the SQL DB
+    /**
+     * addUser function adds new user to SQL DB
+     * @param user JSON string of new user details
+     *
+     */
+    public void addUser(String user) throws SQLException {
+        try {
+
+            JSONObject json = new JSONObject(user);
+
+            String userIdVar = json.getString("userID");
+            Double userPref = json.getDouble("preferences");
+            Boolean userRestrictions = json.getBoolean("restrictions");
+            String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.setString(1, userIdVar);
+            insert.setDouble(2, userPref);
+            insert.setBoolean(3, userRestrictions);
+            insert.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
