@@ -1,19 +1,15 @@
 /**
+ * Class Overview:
+ * The SQLRouteCahce class is where the most common routes will be stored in an SQL DB.
+ * These routes will be first checked from cache before any calculations are done from GIS
+ */
+
+/**
  * @author Matthew Perry
  * @version 1
- *
  */
 
-/**
- * Package for Navigation Module
- *
- */
 package NavUP.Interfaces.NavigationModule;
-
-/**
- * Import libraries for SQL interaction
- *
- */
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,22 +17,18 @@ import org.json.JSONObject;
 
 import java.sql.*;
 
-/**
- * Class to manage SQL DB for most common routes
- */
 public class SQLRouteCache {
     /**
      * Variables to connect to the DB
      */
-    private final static String DB_URL = "jdbc:mysql://localhost/cos301";
-    private final static String USERNAME = "admin";
-    private final static String PASSWORD = "root";
+    private final static String DB_URL = "jdbc:mysql://localhost:3306/Navigation";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     private Connection connection;
 
     /**
      * Default constructor
-     *
      */
     public SQLRouteCache()
     {
@@ -56,7 +48,7 @@ public class SQLRouteCache {
      * @param endPoint The end waypoint.
      * @return true if route already exists, false otherwise.
      */
-    private boolean isRoute(String startPoint,String endPoint) {
+    public boolean isRoute(String startPoint,String endPoint) {
         String check = getCachedRoute(startPoint, endPoint);
         if(check.equals("")) {
             return false;
@@ -106,18 +98,16 @@ public class SQLRouteCache {
 
     /**
      * Get route function to get the route from the SQL DB
-     * @param start The start waypoint
-     * @param end The end waypoint
+     * @param st The start waypoint
+     * @param en The end waypoint
      * @return The JSON string of the found route or an empty string if it is not found
      */
-    public String getCachedRoute(String start, String end) {
+    public String getCachedRoute(String st, String en) {
         String cache = "";
 
         try {
-            String query = "SELECT * FROM `routecache` WHERE startPoint=? AND endPoint=?";
+            String query = "SELECT * FROM `routecache` WHERE startPoint=st AND endPoint=en";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, start);
-            select.setString(2, end);
             ResultSet rs = select.executeQuery(query);
             cache = rs.getString("routeString");
             int id = rs.getInt("idrouteCache");
@@ -145,7 +135,7 @@ public class SQLRouteCache {
      * this method is called and will decide which route to then remove. It then calls removeRoute() for the route that
      * has been decided to be removed.
      */
-    private void manageRoutes()
+    public void manageRoutes()
     {
         String queryStr = "SELECT * FROM routecache;";
         try {
