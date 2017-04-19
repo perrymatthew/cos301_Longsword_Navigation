@@ -165,6 +165,8 @@ public class SQLUserPreferences {
         PreparedStatement pstmt = connection.prepareStatement(sql);
         // set the corresponding param
         pstmt.setInt(1, userId);
+          // execute the delete statement
+        pstmt.executeUpdate();
 
       }
       catch (Exception e){
