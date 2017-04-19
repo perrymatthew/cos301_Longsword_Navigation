@@ -154,4 +154,18 @@ public class SQLUserPreferences {
         }
         return restrictions;
     }
+    /**
+     * As stipulated from the preliminary umldiagram This method will remove  a User.
+     * @param userId This is the Unique ID for the user to be removed.
+     * @throws SQLException Thrown exception in case no deletion of user can be made
+     */
+    public void deleteUser(String userId){
+      try {
+          
+      }
+      catch (Exception e){
+          e.printStackTrace();
+      }
+
+    }
 }
