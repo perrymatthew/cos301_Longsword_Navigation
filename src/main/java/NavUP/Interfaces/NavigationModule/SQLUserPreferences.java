@@ -72,6 +72,10 @@ public class SQLUserPreferences {
           //use userId given from param
             String query = "UPDATE preferences SET preferences=? WHERE userID =?";
             PreparedStatement insert = connection.prepareStatement(query);
+
+            // set the preparedstatement parameters
+            insert.setDouble(1, userPreference);
+            //insert.setString(2, userId);
             insert.executeUpdate();
         }
         catch (Exception e){
