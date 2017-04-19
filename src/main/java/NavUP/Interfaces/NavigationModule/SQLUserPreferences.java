@@ -75,7 +75,7 @@ public class SQLUserPreferences {
 
             // set the preparedstatement parameters
             insert.setDouble(1, userPreference);
-            //insert.setString(2, userId);
+            insert.setString(2, userId);
             insert.executeUpdate();
         }
         catch (Exception e){
