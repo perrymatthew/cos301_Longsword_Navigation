@@ -161,7 +161,7 @@ public class SQLUserPreferences {
      */
     public void deleteUser(String userId){
       try {
-        String sql ="DELETE FROM preferences WHERE userId = ?";
+        String sql ="DELETE FROM preferences WHERE userID = ?";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         // set the corresponding param
         pstmt.setInt(1, userId);
