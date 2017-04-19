@@ -70,7 +70,7 @@ public class SQLUserPreferences {
         try
         {
           //use userId given from param
-            String query = "UPDATE preferences SET preferences=userPreference WHERE userID =userId";
+            String query = "UPDATE preferences SET preferences=? WHERE userID =?";
             PreparedStatement insert = connection.prepareStatement(query);
             insert.executeUpdate();
         }
