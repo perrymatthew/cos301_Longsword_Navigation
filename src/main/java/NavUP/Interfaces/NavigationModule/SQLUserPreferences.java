@@ -161,7 +161,8 @@ public class SQLUserPreferences {
      */
     public void deleteUser(String userId){
       try {
-          
+        String sql ="";
+
       }
       catch (Exception e){
           e.printStackTrace();
