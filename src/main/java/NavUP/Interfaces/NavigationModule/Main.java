@@ -119,6 +119,6 @@ public class Main {
         //navModule.dropPin(pin1);
         //navModule.removePin(pin1);
         //System.out.println(navModule.getUserPins(pin1));
-        System.out.println(navModule.getRoute(pointLocations));
+        //System.out.println(navModule.getRoute(pointLocations));
     }
 }
