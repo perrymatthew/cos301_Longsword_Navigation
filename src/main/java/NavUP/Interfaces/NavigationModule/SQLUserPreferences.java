@@ -67,9 +67,15 @@ public class SQLUserPreferences {
      * @throws SQLException Thrown exception in case no update can be made
      */
     public void updatePreference(String userId, double userPreference) throws SQLException {
-        try {
-            String query = "UPDATE preferences SET preferences=userID WHERE userID =userID";
+        try
+        {
+          //use userId given from param
+            String query = "UPDATE preferences SET preferences=? WHERE userID =?";
             PreparedStatement insert = connection.prepareStatement(query);
+
+            // set the preparedstatement parameters
+            insert.setDouble(1, userPreference);
+            insert.setString(2, userId);
             insert.executeUpdate();
         }
         catch (Exception e){
@@ -151,5 +157,25 @@ public class SQLUserPreferences {
             e.printStackTrace();
         }
         return restrictions;
+    }
+    /**
+     * As stipulated from the preliminary umldiagram This method will remove  a User.
+     * @param userId This is the Unique ID for the user to be removed.
+     * @throws SQLException Thrown exception in case no deletion of user can be made
+     */
+    public void deleteUser(String userId){
+      try {
+        String sql ="DELETE FROM preferences WHERE userID = ?";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        // set the corresponding param
+        pstmt.setInt(1, userId);
+          // execute the delete statement
+        pstmt.executeUpdate();
+
+      }
+      catch (Exception e){
+          e.printStackTrace();
+      }
+
     }
 }
