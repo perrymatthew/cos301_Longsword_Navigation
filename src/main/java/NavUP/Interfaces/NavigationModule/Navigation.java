@@ -16,8 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLException;
-
 public class Navigation implements NavigationInterface {
     private SQLRouteCache routeCache;
     private SQLUserPreferences userPreferences;
@@ -54,7 +52,7 @@ public class Navigation implements NavigationInterface {
             JSONObject jRestrictions = jObject.getJSONObject("restrictions");
             JSONObject jPreferences = jObject.getJSONObject("preferences");
 
-            userPreferences.addUser(jObject.getString("userID"), jRestrictions.getBoolean("isDisabled"), jPreferences.getDouble("maximumRouteLength"));
+            //userPreferences.addUser(jObject.getString("userID"), jRestrictions.getBoolean("isDisabled"), jPreferences.getDouble("maximumRouteLength"));
 
             st = Double.toString(jSource.getDouble("lat")) + "_" + Double.toString(jSource.getDouble("long"));
             en = Double.toString(jDestination.getDouble("lat")) + "_" + Double.toString(jDestination.getDouble("long"));
@@ -62,7 +60,7 @@ public class Navigation implements NavigationInterface {
             checkRoute = routeCache.isRoute(st, en);
 
             if (checkRoute) {
-                cache = routeCache.getCachedRoute(jObject.getString("source"), jObject.getString("destination"));
+                cache = routeCache.getCachedRoute(st, en);
                 return cache;
             }
             else {
@@ -74,6 +72,7 @@ public class Navigation implements NavigationInterface {
                 int arrSize = jRoutes.length();
                 int whichOne = 0;
                 double size = 0.0;
+                double userRestrict = Double.parseDouble(userPreferences.getPreference("user01"));
 
                 JSONObject jWaypoints = jRoutes.getJSONObject(0);
                 size = jWaypoints.getDouble("length");
@@ -81,7 +80,7 @@ public class Navigation implements NavigationInterface {
                 for (int i = 1; i < arrSize; i++) {
                     jWaypoints = jRoutes.getJSONObject(i);
 
-                    if (size > jWaypoints.getDouble("length")) {
+                    if (size > jWaypoints.getDouble("length") && size >= userRestrict) {
                         size = jWaypoints.getDouble("length");
                         whichOne = i;
                     }
@@ -95,9 +94,9 @@ public class Navigation implements NavigationInterface {
         catch (JSONException e) {
             System.out.println("Can not parse string");
         }
-        catch (SQLException e) {
-            System.out.println("Error in DB");
-        }
+        //catch (SQLException e) {
+        //    System.out.println("Error in DB");
+        //}
         return "";
     }
 

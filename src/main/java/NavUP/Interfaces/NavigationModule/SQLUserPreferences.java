@@ -11,7 +11,6 @@
 
 package NavUP.Interfaces.NavigationModule;
 
-import org.json.JSONObject;
 import java.sql.*;
 
 public class SQLUserPreferences {
@@ -123,10 +122,13 @@ public class SQLUserPreferences {
         String pref = "";
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE userID=userId";
+            String query = "SELECT preferences FROM `preferences` WHERE userID=userId";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
-            pref = rs.getString("preferences");
+
+            if(rs.next()){
+                pref = rs.getString(1);
+            }
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -142,10 +144,13 @@ public class SQLUserPreferences {
     public String getRestrictions(String userId) {
         String restrictions = "";
         try {
-            String query = "SELECT * FROM preferences WHERE userID=userId";
+            String query = "SELECT restrictions FROM preferences WHERE userID=userId";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
-            restrictions = rs.getString("restrictions");
+
+            if(rs.next()){
+                restrictions = rs.getString(1);
+            }
         }
         catch (SQLException e){
             e.printStackTrace();

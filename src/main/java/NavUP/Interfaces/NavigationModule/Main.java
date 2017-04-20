@@ -5,6 +5,7 @@ package NavUP.Interfaces.NavigationModule;
 public class Main {
     //Main to test the functionality of everything
     public static void main(String[] args) {
+        //All strings below follow a JSON formatting
         //String to simulate GIS getRoute return type
         String route =
                 "{"
@@ -68,7 +69,7 @@ public class Main {
                         +
                 "}";
         //String to test getRoute functionality
-        String pointLocations =
+        String pointLocations1 =
                 "{"
                         + " \"userID\": \"user01\","
                         + " \"source\":"
@@ -87,10 +88,33 @@ public class Main {
                         + " },"
                         + " \"preferences\":"
                         + " {"
-                        + "     \"maximumRouteLength\": \"50\""
+                        + "     \"maximumRouteLength\": \"20\""
                         + " }"
                         +
                 "}";
+        String pointLocations2 =
+                "{"
+                        + " \"userID\": \"user02\","
+                        + " \"source\":"
+                        + " {"
+                        + "     \"lat\": \"1\","
+                        + "     \"long\": \"2\""
+                        + " },"
+                        + " \"destination\":"
+                        + " {"
+                        + "     \"lat\": \"5\","
+                        + "     \"long\": \"6\""
+                        + " },"
+                        + " \"restrictions\":"
+                        + " {"
+                        + "     \"isDisabled\": \"false\""
+                        + " },"
+                        + " \"preferences\":"
+                        + " {"
+                        + "     \"maximumRouteLength\": \"20\""
+                        + " }"
+                        +
+                        "}";
         //Strings to test pin functionality
         String pin1 =
                 "{"
@@ -114,11 +138,41 @@ public class Main {
                         + " }"
                         +
                 "}";
-        Navigation navModule = new Navigation();
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println(">><><><><><><><><><><><><><><< Navigation Module >><><><><><><><><><><><><><<");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("");
+        System.out.println("Responsibility:");
+        System.out.println("1) Take a start, end, userID, user preference and restrictions to getRoute");
+        System.out.println("2) First check if route is in the cache");
+        System.out.println("3.1) If it is then simply return it from the DB");
+        System.out.println("3.2) If it is not then call getRoute using the GIS interface to return a route");
+        System.out.println("4) Return that route to the Access module");
+        System.out.println("5) Allow users to add a pin and remove a pin");
+        System.out.println("6) Return all of a users pins");
+        System.out.println("");
 
-        //navModule.dropPin(pin1);
-        //navModule.removePin(pin1);
-        //System.out.println(navModule.getUserPins(pin1));
-        //System.out.println(navModule.getRoute(pointLocations));
+        //Navigation object instance
+        Navigation navModule = new Navigation();
+        System.out.println("");
+
+        //Add a route to the cache
+        System.out.println(navModule.getRoute(pointLocations1));
+        System.out.println("");
+        System.out.println(navModule.getRoute(pointLocations2));
+        System.out.println("");
+
+        //Add a pin, display all of the pins and then remove the pins
+        navModule.dropPin(pin1);
+        navModule.dropPin(pin1);
+        navModule.dropPin(pin2);
+        navModule.dropPin(pin2);
+        navModule.removePin(pin2);
+        System.out.println(navModule.getUserPins(pin1));
+        System.out.println("");
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println(">><><><><><><><><><><><><><><< Navigation Module >><><><><><><><><><><><><><<");
+        System.out.println("-----------------------------------------------------------------------------");
     }
 }
