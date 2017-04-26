@@ -104,7 +104,7 @@ public class SQLUserPins {
      */
     public String getUserPins(String userId) {
         try {
-            String query = "SELECT * FROM `userpins` WHERE userID=userId";
+            String query = "SELECT * FROM `userpins` WHERE userID='" + userId + "'";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
 

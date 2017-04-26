@@ -35,7 +35,7 @@ public class SQLRouteCache {
         try {
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             Class.forName(myDriver);
-            //System.out.println("Connected to Database");
+            System.out.println("Connected to Database");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -98,27 +98,30 @@ public class SQLRouteCache {
 
     /**
      * Get route function to get the route from the SQL DB
-     * @param st The start waypoint
-     * @param en The end waypoint
+     * @param startpoint The start waypoint
+     * @param endpoint The end waypoint
      * @return The JSON string of the found route or an empty string if it is not found
      */
-    public String getCachedRoute(String st, String en) {
+    public String getCachedRoute(String startpoint, String endpoint) {
         String cache = "";
+        int id = 0;
 
         try {
-            String query = "SELECT * FROM `routecache` WHERE startPoint=st AND endPoint=en";
+            String query = "SELECT * FROM `routecache` WHERE startPoint='" + startpoint + "'" + " AND endPoint='" + endpoint +"'";
             PreparedStatement select = connection.prepareStatement(query);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("routeString");
-            int id = rs.getInt("idrouteCache");
+
+            if(rs.next()){
+                cache = rs.getString("routeString");
+                id = rs.getInt("idrouteCache");
+            }
+
             /**
              * If the route is found in the database, increase its popularity.
              */
             if (!cache.equals(""))
             {
-                query = "UPDATE 'routecache' \n" +
-                        "  SET popularity = routecache.popularity + 1 \n" +
-                        "  WHERE id = ?";
+                query = "UPDATE `routecache` SET popularity = routecache.popularity + 1 WHERE idrouteCache = ?";
                 PreparedStatement update = connection.prepareStatement(query);
                 update.setInt(1, id);
                 update.executeUpdate();
