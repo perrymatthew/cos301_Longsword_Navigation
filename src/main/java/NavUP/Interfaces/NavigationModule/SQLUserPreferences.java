@@ -1,122 +1,160 @@
-//Package for Navigation Module
-package NavUP.Interfaces.NavigationModule;
+/**
+ * Class Overview:
+ * The SQLUsersPreferences class stores all of a users preferences and restrictions.
+ * These restrictions are used in route choices before they are sent back to access
+ */
 
-//Import libraries for SQL interaction
-import org.json.JSONArray;
-import org.json.JSONObject;
+/**
+ * @author Neo Thokoa, Nathan Ngobale, Azhar Patel
+ * @version 1
+ */
+
+package NavUP.Interfaces.NavigationModule;
 
 import java.sql.*;
 
-//Class to manage SQL DB for user preferences and favourite routes
 public class SQLUserPreferences {
-    //Variables to connect to the DB
-    private final static String DB_URL = "";
-    private final static String USERNAME = "admin";
-    private final static String PASSWORD = "root";
+    /**
+     * Variables to connect to the DB
+     */
+    private final static String DB_URL = "jdbc:mysql://localhost:3306/Navigation";
+    private final static String USERNAME = "root";
+    private final static String PASSWORD = "";
     private final static String myDriver = "org.gjt.mm.mysql.Driver";
     Connection connection;
 
-    //Default constructor
+    /**
+     * Default constructor of SQLUserPreferences
+     */
     public SQLUserPreferences()
     {
-        //Try Catch block for error handling
         try {
-            //Establish connection to teh DB
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             Class.forName(myDriver);
             System.out.println("Connected to Database");
         }
         catch (Exception e) {
-            //Throw exception if connection failed
             e.printStackTrace();
         }
     }
 
-    //Add user function to add the user to the SQL DB
-    public void addUser(String user) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-
-        //Try Catch block for error handling
+    /**
+     * addUser function adds a user to the DB
+     * @param userId User id passed to function to identify the user
+     * @param userRestriction The user's restriction (disabled or not)
+     * @param userPreference The user's prefered route (with regards to the length)
+     * @throws SQLException Thrown exception in case the user can not be added 
+     */
+    public void addUser(String userId, boolean userRestriction, double userPreference) throws SQLException {
         try {
-            //Adding the route to the DB
-
-            JSONObject json = new JSONObject(user);
-
-            String userIdVar = json.getString("userID");
-            Double userPref = json.getDouble("preferences");
-            Boolean boolReceived = json.getBoolean("restrictions");
-            Integer userRestrictions = boolReceived.compareTo(true);
             String query = "INSERT INTO `preferences`(userID, preferences, restrictions) VALUE (?, ?, ?)";
             PreparedStatement insert = connection.prepareStatement(query);
-            insert.setString(1, userIdVar);
-            insert.setDouble(2, userPref);
-            insert.setDouble(3, userRestrictions);
+            insert.setString(1, userId);
+            insert.setDouble(2, userPreference);
+            insert.setBoolean(3, userRestriction);
             insert.executeUpdate();
-//            JSONArray pinsArray = new JSONArray();
-//            String query = "";
-//            Statement st = connection.createStatement();
-//            ResultSet rs = st.executeQuery(query);
         }
         catch (Exception e){
-            //Throw exception if connection failed
             e.printStackTrace();
         }
     }
 
-    //Update preference function to update the preference of a user to the SQL DB
-    public void updatePreference(String pref) throws SQLException {
-        //Variable for the user's ID
-        String user_ID = "";
-        //Variable for the user's preference
-        String user_Pref = "";
-
-        //Try Catch block for error handling
+    /**
+     * updatePreference function to update the already existing user's preference
+     * @param userId The user's ID to update
+     * @param userPreference The preference associated to the user's ID
+     * @throws SQLException Thrown exception in case no update can be made
+     */
+    public void updatePreference(String userId, double userPreference) throws SQLException {
         try {
-            //Removing the route from the DB
-            String query = "";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "UPDATE preferences SET preferences=userID WHERE userID='" + userId + "'";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.executeUpdate();
         }
-        catch (SQLException e){
-            //Throw exception if connection failed
+        catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    //Get user function to get the user from the SQL DB
-    public String getUser(String user) throws SQLException {//convert to JSON?
-        String cache = "";
-
+    /**
+     * updateRestrictions function to update the already existing user's restriction
+     * @param userId The user's ID to update
+     * @param userRestriction The restriction associated to the user's ID
+     * @throws SQLException Thrown exception in case no update can be made
+     */
+    public void updateRestrictions(String userId, boolean userRestriction) throws SQLException {
         try {
-            String query = "SELECT * FROM `preferences` WHERE userID=?";
+            String query = "UPDATE preferences SET restrictions = userRestriction WHERE userID='" + userId + "'";
+            PreparedStatement insert = connection.prepareStatement(query);
+            insert.executeUpdate();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * getUser function to get the user from the SQL DB.
+     * @param userId The passed user ID to search from the DB
+     * @return This is a string representing the user .
+     * @throws SQLException Thrown exception in case no user can be obtained
+     */
+    public String getUser(String userId) throws SQLException {
+        String user = "";
+        try {
+            String query = "SELECT userID FROM preferences WHERE userID='" + userId + "'";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, user);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("userString");
+            user = rs.getString("userID");
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return cache;
+        return user;
     }
 
-    //Get preference function to get the user's preference from the SQL DB
-    public String getPreference(String pref) throws SQLException {//convert to JSON?
-         String cache = "";
+    /**
+     * This method will return the preferences for a user.
+     * @param userId This is the Unique ID for the user.
+     * @return A string representing the user's preferences.
+     */
+    public String getPreference(String userId) {
+        String pref = "";
 
         try {
-            String query = "SELECT * FROM `preferences` WHERE preferences=?";
+            String query = "SELECT preferences FROM preferences WHERE userID='" + userId + "'";
             PreparedStatement select = connection.prepareStatement(query);
-            select.setString(1, pref);
             ResultSet rs = select.executeQuery(query);
-            cache = rs.getString("prefString");
+
+            if(rs.next()){
+                pref = rs.getString(1);
+            }
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-        return cache;
+        return pref;
+    }
+
+    /**
+     * This method will return the restrictions for a User.
+     * @param userId This is the Unique ID for the user.
+     * @return A string representing the user's preferences.
+     */
+    public String getRestrictions(String userId) {
+        String restrictions = "";
+        try {
+            String query = "SELECT restrictions FROM preferences WHERE userID='" + userId + "'";
+            PreparedStatement select = connection.prepareStatement(query);
+            ResultSet rs = select.executeQuery(query);
+
+            if(rs.next()){
+                restrictions = rs.getString(1);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return restrictions;
     }
 }

@@ -1,0 +1,3 @@
+cachedRouteAvalilable : True
+The route is available in local storage. Path is being returned.
+{"_id":"58d39da3ec839332409c9e39","routeID":"1","beginPoint":"Humanities","endPoint":"Law","waypoints":[{"name":"Piazza"},{"name":"TuksFm"},{"name":"Centenary"}]}
