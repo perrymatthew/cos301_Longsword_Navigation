@@ -15,4 +15,10 @@
 \caption{Service Contract: Get Cache Route}
 	\textbf{Mark: 9/10}
 	
+\item \textbf{Add Route:}\\In the following service contract, begins by taking in as parameters the begining and ending points of a JSON route string, jsonData which is the entire stream if possible solutions between the points and a function as a parameter. The function then uses the link to the Mongo database to enter the entry, aided by means of a helper function to do the conversion. Followed by a callback function which is used for variefication.
+Since this may involve multiple entries being entered at once I believe that provision should have been made for entering multiple entries of data, although Mongo may be fast the ineffientcy to always call the function may produce slight overhead where as if multiple entries were made the data could be passed through as an array of entry points with paired end points. As a single route entry has mutltiple attributes speed of execution should be taken into account.\\
+\includegraphics[scale=0.5]{AddRoute.png}
+\caption{Service Contract: Get Cache Route}
+	\textbf{Mark: 6/10}
+	
 \end{itemize}
