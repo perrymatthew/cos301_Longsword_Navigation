@@ -1,0 +1,24 @@
+\subsection{White Box Test Model}
+
+The code located inside of the navigationLocal.js file was examined in order to determine the correctness of the output that was displayed in the Black Box test.
+At the very top of the script there were a set of global variables that allowed a connection to be formed to mongo DB however, there was no variable for any NSQ connection.
+A global data variable was defined which contained a hardcoded JSON formatted string of routes. This variable was then converted into a string and parsed into a JSON object which was used in all of the functions.
+
+
+The code covered the following functionality:
+\begin{enumerate}
+\item Adding a route
+\item Adding user preferences
+\item Updating user preferences
+\item Calculating the distance between two points
+\item Finding a users preferences
+\item Finding a route that was added
+\item Removing user preferences
+\item Removing a route
+\item Establishing a connection the a persistent database (Mongo DB in this case)
+\end{enumerate}
+
+
+Taking a second look at the text output that was received from the previous test model phase, the output correlates to each of the functions execution and outcome
+(connections established, routes added and removed etc).
+There seem to be no logical errors and the code preforms its required actions which correlate to the output.
