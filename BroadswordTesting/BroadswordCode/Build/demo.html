@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo</title>
+	
+	<script type="text/javascript">
+		class Location
+		{
+			constructor(name)
+			{
+				this.name = name;
+			}
+		}
+
+		class Route
+		{
+			constructor(start, end)
+			{
+				this.name = start.name +"->" + end.name;
+				this.path = [start.name];
+			}
+		}		
+
+		//Test Case 1: Outdoor to Outdoor
+		var sc = new Location("Student Centre");
+		var gb = new Location("Geography Building");
+		var oab = new Location("Old Arts Building");
+		var oaf = new Location("Old Arts Fountain");
+		var ag = new Location("Aula Grass");
+		var sc2ag = new Route(sc, ag);
+		sc2ag.path.push(gb.name);
+		sc2ag.path.push(oab.name);
+		sc2ag.path.push(oaf.name);
+		sc2ag.path.push(ag.name);
+		// console.log(sc2ag.path);
+
+		//Test Case 2: Indoor to Indoor
+		var it4_4 = new Location("IT 4-4");
+		var it4_5 = new Location("IT 4-5");
+		var st = new Location("Stairs");
+		var el = new Location("Elevator");
+		var gd = new Location("Glass Doors");
+		var pl = new Location("Project Labs");
+		var it2pl = new Route(it4_4, pl);
+		it2pl.path.push(it4_5.name);
+		it2pl.path.push(st.name);
+		it2pl.path.push(el.name);
+		it2pl.path.push(gd.name);
+		it2pl.path.push(pl.name);
+		// console.log(it2pl.path);
+
+		//Test Case 3: Indoor to Outdoor
+		var it2_26 = new Location("IT 2-26");
+		var embb = new Location("EMB Benches");
+		var sat = new Location("Shop@Tuks");
+		var sba = new Location("Standard Bank ATM");
+		var og = new Location("Oom Gert");
+		var it2og = new Route(it2_26, og);
+		it2og.path.push(gd.name);
+		it2og.path.push(embb.name);
+		it2og.path.push(sat.name);
+		it2og.path.push(sba.name);
+		it2og.path.push(og.name);
+		// console.log(it2og.path);
+
+		//Test Case 4: Outdoor to Indoor
+		var hbg = new Location("HB Grass");
+		var ml = new Location("Merensky Library");
+		var aa = new Location("Absa ATM");
+		var cb = new Location("Chancellor's Building");
+		var rh = new Location("Roos Hall");
+		var hbg2rh = new Route(hbg, rh);
+		hbg2rh.path.push(ml.name);
+		hbg2rh.path.push(aa.name);
+		hbg2rh.path.push(cb.name);
+		hbg2rh.path.push(st.name);
+		hbg2rh.path.push(rh.name);
+		// console.log(hbg2rh.path);
+
+		function demoTestCases(caseNumber)
+		{
+			if(caseNumber == 1)
+			{
+				document.getElementById("case").innerHTML = "Test Case 1: Outdoor to Outdoor";
+				document.getElementById("name").innerHTML = sc2ag.name;
+				document.getElementById("path").innerHTML = "[" + sc2ag.path + "]";
+			}
+			if(caseNumber == 2)
+			{
+				document.getElementById("case").innerHTML = "Test Case 2: Indoor to Indoor";
+				document.getElementById("name").innerHTML = it2pl.name;
+				document.getElementById("path").innerHTML = "[" + it2pl.path + "]";
+			}
+			if(caseNumber == 3)
+			{
+				document.getElementById("case").innerHTML = "Test Case 3: Indoor to Outdoor";
+				document.getElementById("name").innerHTML = it2og.name;
+				document.getElementById("path").innerHTML = "[" + it2og.path + "]";
+			}
+			if(caseNumber == 4)
+			{
+				document.getElementById("case").innerHTML = "Test Case 4: Outdoor to Indoor";
+				document.getElementById("name").innerHTML = hbg2rh.name;
+				document.getElementById("path").innerHTML = "[" + hbg2rh.path + "]";
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>Mock Test Cases</h1>
+	<div id="case"><br></div>
+	<div id="name"><br></div>
+	<div id="path"><br></div>
+	<br>
+	<button onclick='demoTestCases(1)''>Test Case 1</button>
+	<button onclick='demoTestCases(2)''>Test Case 2</button>
+	<button onclick='demoTestCases(3)''>Test Case 3</button>
+	<button onclick='demoTestCases(4)''>Test Case 4</button>
+</body>
+</html>

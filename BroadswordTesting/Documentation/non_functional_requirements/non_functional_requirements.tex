@@ -1,0 +1,15 @@
+\begin{itemize}
+	
+\item \textbf{Maintainability:}\\Coding standards were upheld and the code was well documented. However, the lack of compartmentalization of functionality may prove problematic when  removing, adding, or editing program features. Furthermore, the location data is kept in a single file with the program therefore if a location should be added it cannot be added with a database query but had to be done manually.\\
+	\textbf{Mark: 6/10}
+\item \textbf{Scalability:}\\MongoDB as a choice of database management is favourable especially with regards scalability. However, the location data is not stored in a MongoDB database but rather in the same navigationLocal.js file as the entire program. This will cause a bottleneck when the amount of location data is increased.\\
+	\textbf{Mark: 7/10}
+\item \textbf{Accessibility:}\\All functions allowed other modules to request information as well as get a result returned if needed. The scope of the functions were adequate, allowing other modules to call needed functions. However, the scope was broad and did allow access functions which other modules should not have access to.\\
+	\textbf{Mark: 8/10}
+\item \textbf{Security:}\\Since the server is not a relational database, and it does not use "get" requests to and from clients. The security is inadvertently good.\\
+	\textbf{Mark: 9/10}
+\item \textbf{Performance:}\\The use of MongoDB and not the use of a relational database improves the efficiency and reduces the overhead of reading from and writing to the database. The functions are designed to be called once per request per user. \\
+	\textbf{Mark: 8/10}
+\input{non_functional_requirements/Coverage.tex}
+\input{non_functional_requirements/Efficiency.tex}
+\end{itemize}

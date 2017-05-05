@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    <title>NAV UP</title>
+	<script src='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
+	<link href='https://api.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css' rel='stylesheet' />
+  </head>
+<body>
+	<div id='map' style='width: 400px; height: 300px;'></div>
+	<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBoYm9uZGpvYm8iLCJhIjoiY2owbnV0YTR1MDAwYTJ3cnlvZXVncDBubiJ9.7hmYQc_5yLLT1ZNnzFPhWQ';
+	var map = new mapboxgl.Map({
+	container: 'map',
+	style: 'mapbox://styles/mapbox/streets-v9'
+	});
+	</script>
+<!-- +++++ Form section +++++ -->
+	<div class="content" sytle="text-align: center">
+		<div class="title" style="text-align:center">
+			<h3>NAV UP</h3>
+		</div>
+		
+		<div class="form" sytle="align: center; width:80%">	
+			<form action="" method="POST" role="form" id="frm" onsubmit="">
+				<div id="map" style="text-align:center">
+					<!--  Engineering 1 to Chemistry building-->
+					<iframe src="https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d1796.7490041984868!2d28.23048240470894!3d-25.75410932933443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-25.753367599999997!2d28.2307186!4m3!3m2!1d-25.753175!2d28.2287243!5e0!3m2!1sen!2sza!4v1490106436528" width="1000" height="650" frameborder="1" style="border:1" allowfullscreen></iframe>
+					
+					<!--  Engineering 1 to Chancelors building-->
+					<!--iframe src="https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d898.3790261239538!2d28.22952017923979!3d-25.7535112489775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-25.753222599999997!2d28.2287529!4m3!3m2!1d-25.754196399999998!2d28.2309193!5e0!3m2!1sen!2sza!4v1490106019353" width="1000" height="650" frameborder="1" style="border:1" allowfullscreen></iframe-->
+					
+					<!--  Centenary to Empitheathre -->
+					<!--iframe src="https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d1833.4498610315707!2d28.23039049648537!3d-25.753676448446015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e2!4m3!3m2!1d-25.754133399999997!2d28.2330671!4m3!3m2!1d-25.7543191!2d28.2288452!5e0!3m2!1sen!2sza!4v1490106840894" width="1000" height="650" frameborder="1" style="border:1" allowfullscreen></iframe-->
+					<br/><br/>
+					
+					<!--  Satellite view -->
+					<script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+					<div id='gmap_canvas' style='height:650px;width:1000px;border:1px;text-align:center!important'></div>
+					<style>
+						#gmap_canvas img{align:centered!important;background:none!important}
+					</style>
+					<script type='text/javascript'>function init_map(){
+						var x = document.getElementById('xpoint').value;
+						var y = document.getElementById('ypoint').value;
+						var zz = document.getElementById('zm').value;
+						var myOptions = {zoom: 19, center:new google.maps.LatLng(x,y),
+						mapTypeId: google.maps.MapTypeId.SATELLITE};
+						map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+						marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(x,y)});
+						infowindow = new google.maps.InfoWindow({content:'<strong>University of Pretoria</strong><br>'});
+						google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});
+						infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+					</script>
+				</div>
+				<table align=center>
+					<tr>
+						<th> X-coordinate: </th>
+						<th> Y-coordinate: </th>
+						<th> Zoom: </th>
+					</tr>
+					<tr>
+						<th><input id='xpoint' maxlength="40" size="40" value="-25.7545492"/></th>
+						<th><input id='ypoint' maxlength="40" size="40" value="28.231447600000024"/></th>
+						<th><input type='number' id='zm' maxlength="2" size="2" value="17"/></th>
+					</tr><hr/>
+				</table><br/>
+				<div style="text-align: center">
+					<button type="submit">SUBMIT</button>
+				</div><br/><br/>
+			</form>    			
+		</div>
+	</div><!-- /content -->
+	<!-- +++++ Footer Section +++++ -->
+	<hr/>
+	<div>
+		<span style="float: left"><b>TEAM</b><br>
+		BROADSWROD<br>
+		NAVIGATION<br>
+		</span>
+
+		<span style="float: right"><b>COS301</b><br>
+		MINI PROJECT PART 3<br/>
+		NAV UP<br>
+		CS Department 2017</span>
+	</div>
+ </body>
+</html>

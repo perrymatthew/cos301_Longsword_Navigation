@@ -1,0 +1,28 @@
+{
+  "name": "COS301Phase3BroadswordNavigation",
+  "version": "1.0.0",
+  "description": "COS 301 Team Broadsword navigation",
+  "main": "navigationLocal.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-generator": "^4.14.1",
+    "mocha": "^3.2.0",
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndriesJacobus/COS301Phase3BroadswordNavigation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndriesJacobus/COS301Phase3BroadswordNavigation/issues"
+  },
+  "homepage": "https://github.com/AndriesJacobus/COS301Phase3BroadswordNavigation#readme"
+}

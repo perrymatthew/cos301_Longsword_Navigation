@@ -102,3 +102,18 @@ public interface NavigationInterface {
 //        long: double
 //    }
 //}
+
+//public String getUserPins (String userID)
+//Json Format:
+//
+//Input Paramater: {userID:String}
+//Output Return Value:
+//{
+//  pins:
+//  [
+//      {
+//          lat: double,
+//          long: double,
+//          customName: String
+//      },
+//  ]
